@@ -19,10 +19,8 @@ class HeadingText extends StatelessWidget {
       text,
       maxLines: 1,
       overflow: overflow,
-      style: TextStyle(
-        color: color,
-        fontSize: size,
-      ),
+      style:
+          TextStyle(color: color, fontSize: size, fontWeight: FontWeight.bold),
     );
   }
 }
