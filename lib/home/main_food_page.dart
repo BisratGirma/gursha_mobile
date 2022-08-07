@@ -3,6 +3,8 @@ import 'package:gursha/home/food_page_body.dart';
 import 'package:gursha/widgets/heading.dart';
 import 'package:gursha/widgets/small_heading.dart';
 
+import '../util/colors.dart';
+
 class MainFoodPage extends StatefulWidget {
   const MainFoodPage({Key? key}) : super(key: key);
 
@@ -40,10 +42,10 @@ class _MainFoodPageState extends State<MainFoodPage> {
                     width: 45,
                     height: 45,
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        color: Theme.of(context).primaryColor),
-                    child: Icon(Icons.search_rounded,
-                        color: Theme.of(context).backgroundColor),
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: const Icon(Icons.search_rounded,
+                        color: AppColors.textColor),
                   )
                 ],
               )),
