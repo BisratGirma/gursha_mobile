@@ -25,13 +25,18 @@ class Dimensions {
 
   //dynamic font and radius values
   static double font20 = screenHeight / 42;
+  static double font27 = screenHeight / 33;
   static double radius20 = screenHeight / 42;
   static double radius30 = screenHeight / 28.05;
 
   //icon size
   static double iconSize24 = screenHeight / 34.7;
+  static double iconSize16 = screenHeight / 52.2;
 
   //list view sizes
   static double listViewImg = screenWidth / 3.24;
   static double listViewTextContainer = screenWidth / 3.9;
+
+  //popular detail sizes
+  static double popularImgSize = screenWidth / 2.01;
 }

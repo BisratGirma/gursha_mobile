@@ -1,7 +1,8 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:gursha/home/main_food_page.dart';
+import 'package:gursha/screens/foods/popular_food_detail.dart';
+import 'package:gursha/screens/home/main_food_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -29,7 +30,7 @@ class MyApp extends StatelessWidget {
           // is not restarted.
           primarySwatch: Colors.amber,
           backgroundColor: Colors.white70),
-      home: const MainFoodPage(),
+      home: const PopularFoodDetail(),
     );
   }
 }
