@@ -38,12 +38,11 @@ class _FoodPageBodyState extends State<FoodPageBody> {
     return Column(
       children: [
         Container(
-          height: Dimensions.screenHeight / 2.7,
+          height: Dimensions.pageView,
           child: PageView.builder(
               controller: pageController,
               itemCount: 5,
-              itemBuilder: (context, position) =>
-                  _buildPageItem(position, context)),
+              itemBuilder: (context, position) => _buildPageItem(position)),
         ),
         DotsIndicator(
           dotsCount: 5,
@@ -54,12 +53,110 @@ class _FoodPageBodyState extends State<FoodPageBody> {
             activeShape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(5.0)),
           ),
-        )
+        ),
+        SizedBox(height: Dimensions.height20),
+        Container(
+          margin: EdgeInsets.only(
+              left: Dimensions.width33, bottom: Dimensions.height20),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              HeadingText(text: 'Popular'),
+              SizedBox(width: Dimensions.width10),
+              Container(
+                  margin: const EdgeInsets.only(bottom: 3),
+                  child: HeadingText(
+                    text: '.',
+                    color: Colors.black26,
+                  )),
+              SizedBox(
+                width: Dimensions.width10,
+              ),
+              Container(
+                margin: const EdgeInsets.only(bottom: 2),
+                child: SmallHeadingText(text: 'Food pairing'),
+              ),
+            ],
+          ),
+        ),
+        ListView.builder(
+            physics: const NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            itemCount: 10,
+            itemBuilder: (context, index) => Container(
+                  margin: EdgeInsets.only(
+                      left: Dimensions.width24,
+                      right: Dimensions.width24,
+                      bottom: Dimensions.height15),
+                  child: Row(children: [
+                    Container(
+                      width: Dimensions.listViewImg,
+                      height: Dimensions.listViewImg,
+                      decoration: BoxDecoration(
+                          borderRadius:
+                              BorderRadius.circular(Dimensions.radius20),
+                          color: Colors.white24,
+                          image: const DecorationImage(
+                              fit: BoxFit.cover,
+                              image: AssetImage('assets/images/pizza.jpeg'))),
+                    ),
+                    Expanded(
+                      child: Container(
+                        height: Dimensions.listViewTextContainer,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(Dimensions.radius20),
+                                bottomRight:
+                                    Radius.circular(Dimensions.radius20)),
+                            color: Colors.white),
+                        child: Padding(
+                            padding: EdgeInsets.only(
+                                left: Dimensions.width10,
+                                right: Dimensions.width10),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                HeadingText(
+                                    text: 'Nutritional Traditional Meal'),
+                                SizedBox(
+                                  height: Dimensions.height10,
+                                ),
+                                SmallHeadingText(
+                                    text:
+                                        'Rich meals, also having that taste you won\'t find anywhere'),
+                                SizedBox(
+                                  height: Dimensions.height10,
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    IconAndText(
+                                        icon: Icons.circle_sharp,
+                                        text: 'Normal',
+                                        iconColor: AppColors.mainColor),
+                                    IconAndText(
+                                        icon: Icons.timer_sharp,
+                                        text: '10 mins',
+                                        iconColor: AppColors.textColor),
+                                    IconAndText(
+                                        icon: Icons.location_on,
+                                        text: '1 Km',
+                                        iconColor: AppColors.iconColor1)
+                                  ],
+                                ),
+                              ],
+                            )),
+                      ),
+                    )
+                  ]),
+                ))
       ],
     );
   }
 
-  Widget _buildPageItem(int index, BuildContext context) {
+  Widget _buildPageItem(int index) {
     Matrix4 matrix = Matrix4.identity();
     if (index == _currentPageValue.floor()) {
       var currentScale = 1 - (_currentPageValue - index) * (1 - _scaleFactor);
@@ -88,9 +185,10 @@ class _FoodPageBodyState extends State<FoodPageBody> {
         children: [
           Container(
             height: Dimensions.pageViewContainer,
-            margin: const EdgeInsets.only(left: 9, right: 9),
+            margin: EdgeInsets.only(
+                left: Dimensions.width33, right: Dimensions.width33),
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(30),
+                borderRadius: BorderRadius.circular(Dimensions.radius30),
                 color: index.isOdd ? Colors.amberAccent : Colors.blueAccent,
                 image: const DecorationImage(
                     fit: BoxFit.cover,
@@ -100,9 +198,12 @@ class _FoodPageBodyState extends State<FoodPageBody> {
             alignment: Alignment.bottomCenter,
             child: Container(
                 height: Dimensions.pageViewTextContainer,
-                margin: const EdgeInsets.only(left: 36, right: 36, bottom: 33),
+                margin: EdgeInsets.only(
+                    left: Dimensions.width42,
+                    right: Dimensions.width42,
+                    bottom: Dimensions.height20),
                 decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30),
+                    borderRadius: BorderRadius.circular(Dimensions.radius20),
                     color: Colors.white,
                     boxShadow: const [
                       BoxShadow(
@@ -113,14 +214,17 @@ class _FoodPageBodyState extends State<FoodPageBody> {
                       BoxShadow(color: Colors.white, offset: Offset(5, 0))
                     ]),
                 child: Container(
-                  padding: const EdgeInsets.only(top: 9, left: 15, right: 15),
+                  padding: EdgeInsets.only(
+                      top: Dimensions.height10,
+                      left: Dimensions.width15,
+                      right: Dimensions.width15),
                   child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         HeadingText(text: 'Beyaynet'),
-                        const SizedBox(
-                          height: 10,
+                        SizedBox(
+                          height: Dimensions.height10,
                         ),
                         Row(
                           children: [

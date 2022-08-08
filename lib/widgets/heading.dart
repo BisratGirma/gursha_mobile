@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gursha/util/dimensions.dart';
 
 class HeadingText extends StatelessWidget {
   Color? color;
@@ -9,7 +10,7 @@ class HeadingText extends StatelessWidget {
       {Key? key,
       this.color = Colors.black87,
       required this.text,
-      this.size = 20,
+      this.size = 0,
       this.overflow = TextOverflow.ellipsis})
       : super(key: key);
 
@@ -19,8 +20,10 @@ class HeadingText extends StatelessWidget {
       text,
       maxLines: 1,
       overflow: overflow,
-      style:
-          TextStyle(color: color, fontSize: size, fontWeight: FontWeight.bold),
+      style: TextStyle(
+          color: color,
+          fontSize: size == 0 ? Dimensions.font20 : size,
+          fontWeight: FontWeight.bold),
     );
   }
 }

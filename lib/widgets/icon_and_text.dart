@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:gursha/util/colors.dart';
+import 'package:gursha/util/dimensions.dart';
 import 'package:gursha/widgets/small_heading.dart';
 
 class IconAndText extends StatelessWidget {
@@ -11,7 +13,7 @@ class IconAndText extends StatelessWidget {
       {Key? key,
       required this.icon,
       required this.text,
-      this.color = Colors.amberAccent,
+      this.color = AppColors.textColor,
       required this.iconColor})
       : super(key: key);
 
@@ -21,7 +23,8 @@ class IconAndText extends StatelessWidget {
       children: [
         Icon(
           icon,
-          color: color,
+          color: iconColor,
+          size: Dimensions.iconSize24,
         ),
         const SizedBox(width: 5),
         SmallHeadingText(
