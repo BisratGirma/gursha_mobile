@@ -39,4 +39,5 @@ class Dimensions {
 
   //popular detail sizes
   static double popularImgSize = screenWidth / 2.01;
+  static double navbarHeight = screenHeight / 7.02;
 }

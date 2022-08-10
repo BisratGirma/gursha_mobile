@@ -7,8 +7,9 @@ import 'package:gursha/widgets/small_heading.dart';
 
 class AppColumn extends StatelessWidget {
   final String title;
-  final double? size;
-  const AppColumn({Key? key, required this.title, this.size}) : super(key: key);
+  final double size;
+  const AppColumn({Key? key, required this.title, this.size = 0})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,9 +27,7 @@ class AppColumn extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              size == null
-                  ? HeadingText(text: title)
-                  : HeadingText(text: title, size: size!),
+              HeadingText(text: title, size: size),
               SizedBox(
                 height: Dimensions.height10,
               ),
