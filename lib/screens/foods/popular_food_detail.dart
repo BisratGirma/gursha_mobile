@@ -61,9 +61,13 @@ class PopularFoodDetail extends StatelessWidget {
                       SizedBox(
                         height: Dimensions.height20,
                       ),
-                      const ExpandableText(
-                          text:
-                              'Yetsom Beyaynetu is an Ethiopian combination platter composed of vegan curries and veggies. We love the variety this type of dinner offers. Our version features a rich red lentil stew, tender collard greens simmered with tomatoes and warming berbere spice blend, and a spicy fresh tomato salad with chiles.')
+                      const Expanded(
+                        child: SingleChildScrollView(
+                          child: ExpandableText(
+                              text:
+                                  'Yetsom Beyaynetu is an Ethiopian combination platter composed of vegan curries and veggies. We love the variety this type of dinner offers. Our version features a rich red lentil stew, tender collard greens simmered with tomatoes and warming berbere spice blend, and a spicy fresh tomato salad with chiles.'),
+                        ),
+                      )
                     ],
                   )))
         ]),
