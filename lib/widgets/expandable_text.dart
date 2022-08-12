@@ -32,37 +32,43 @@ class _ExpandableTextState extends State<ExpandableText> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Container(
-        child: secondPart.isEmpty
-            ? SmallHeadingText(
-                text: firstPart,
-              )
-            : Column(
-                children: [
-                  SmallHeadingText(
-                      text: hiddenText
-                          ? (firstPart + '...')
-                          : (firstPart + secondPart)),
-                  InkWell(
-                    onTap: () => setState(() {
-                      hiddenText = !hiddenText;
-                    }),
-                    child: Row(children: [
-                      SmallHeadingText(
-                        text: 'show ${hiddenText ? 'more' : 'less'}',
-                        color: AppColors.mainColor,
-                      ),
-                      Icon(
-                        hiddenText
-                            ? Icons.arrow_drop_down
-                            : Icons.arrow_drop_up,
-                        color: AppColors.mainColor,
-                      )
-                    ]),
-                  )
-                ],
-              ),
+    return Expanded(
+      child: SingleChildScrollView(
+        child: Container(
+          child: secondPart.isEmpty
+              ? SmallHeadingText(
+                  text: firstPart,
+                )
+              : Column(
+                  children: [
+                    SmallHeadingText(
+                        overflow: TextOverflow.visible,
+                        size: Dimensions.font15,
+                        color: AppColors.paraColor,
+                        height: 1.8,
+                        text: hiddenText
+                            ? (firstPart + ' ...')
+                            : (firstPart + secondPart)),
+                    InkWell(
+                      onTap: () => setState(() {
+                        hiddenText = !hiddenText;
+                      }),
+                      child: Row(children: [
+                        SmallHeadingText(
+                          text: 'show ${hiddenText ? 'more' : 'less'}',
+                          color: AppColors.mainColor,
+                        ),
+                        Icon(
+                          hiddenText
+                              ? Icons.arrow_drop_down
+                              : Icons.arrow_drop_up,
+                          color: AppColors.mainColor,
+                        )
+                      ]),
+                    )
+                  ],
+                ),
+        ),
       ),
     );
   }

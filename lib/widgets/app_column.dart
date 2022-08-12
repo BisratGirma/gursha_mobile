@@ -31,6 +31,18 @@ class AppColumn extends StatelessWidget {
               SizedBox(
                 height: Dimensions.height10,
               ),
+              Wrap(
+                children: List.generate(
+                    5,
+                    (index) => const Icon(
+                          Icons.star,
+                          color: AppColors.mainColor,
+                          size: 15,
+                        )),
+              ),
+              SizedBox(
+                height: Dimensions.height10,
+              ),
               SmallHeadingText(
                   text:
                       'Rich meals, also having that taste you won\'t find anywhere'),

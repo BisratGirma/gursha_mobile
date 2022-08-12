@@ -39,6 +39,7 @@ class PopularFoodDetail extends StatelessWidget {
               left: 0,
               right: 0,
               top: Dimensions.popularImgSize - 21,
+              bottom: 0,
               child: Container(
                   padding: EdgeInsets.only(
                       left: Dimensions.width15,
@@ -57,7 +58,10 @@ class PopularFoodDetail extends StatelessWidget {
                           size: Dimensions.font27),
                       SizedBox(height: Dimensions.height20),
                       HeadingText(text: 'Introduce'),
-                      ExpandableText(
+                      SizedBox(
+                        height: Dimensions.height20,
+                      ),
+                      const ExpandableText(
                           text:
                               'Yetsom Beyaynetu is an Ethiopian combination platter composed of vegan curries and veggies. We love the variety this type of dinner offers. Our version features a rich red lentil stew, tender collard greens simmered with tomatoes and warming berbere spice blend, and a spicy fresh tomato salad with chiles.')
                     ],

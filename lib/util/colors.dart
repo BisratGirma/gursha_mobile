@@ -7,4 +7,5 @@ class AppColors {
   static const Color backgroundColors = Color.fromARGB(239, 243, 243, 243);
   static const Color signColor = Color.fromARGB(255, 190, 190, 190);
   static const Color passColor = Color.fromARGB(255, 90, 190, 90);
+  static const Color paraColor = Color.fromARGB(255, 49, 49, 49);
 }
