@@ -1,11 +1,14 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:gursha/helper/dependencies.dart' as dependency;
 import 'package:gursha/screens/foods/popular_food_detail.dart';
 import 'package:gursha/screens/foods/recommended_food_detail.dart';
 import 'package:gursha/screens/home/main_food_page.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await dependency.init();
   runApp(const MyApp());
 }
 
