@@ -4,7 +4,6 @@ import 'package:gursha/util/dimensions.dart';
 import 'package:gursha/widgets/app_icon.dart';
 import 'package:gursha/widgets/expandable_text.dart';
 import 'package:gursha/widgets/heading.dart';
-import 'package:gursha/widgets/small_heading.dart';
 
 class RecommendedFoodDetail extends StatelessWidget {
   const RecommendedFoodDetail({Key? key}) : super(key: key);
@@ -36,7 +35,7 @@ class RecommendedFoodDetail extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 5, bottom: 10),
                 child: Center(
                     child: HeadingText(
-                        text: 'Ethiopian Side', size: Dimensions.font27)),
+                        text: 'Yetsom Beyaynetu', size: Dimensions.font27)),
               ),
             ),
             pinned: true,
@@ -44,7 +43,7 @@ class RecommendedFoodDetail extends StatelessWidget {
             expandedHeight: 300,
             flexibleSpace: FlexibleSpaceBar(
               background: Image.asset(
-                'assets/images/burger.jpeg',
+                'assets/images/beyaynet.jpg',
                 width: double.maxFinite,
                 fit: BoxFit.cover,
               ),
@@ -59,7 +58,7 @@ class RecommendedFoodDetail extends StatelessWidget {
                   child: ExpandableText(
                       size: Dimensions.font20,
                       text:
-                          'cccc cccccccccccccccccccccccccc cccccccccccccccccccccc cccccccccccccccccccc ccccccccccccccccccc cccccccccccccccccccccc cccccccccccccccccccccccc ccccccccccccccccccccccc cccccccccccccccccccccccc ccccccccccccccccccccccccc ccccccccccccccccccccc ccccccccccccccccccccc cccccccccccccccccccccc cccccccccccccccccccccc cccccccccccccccccc cccccccccccccccccccccc cccccccccccccccccccccccccc ccccccccccccccccccc cccccccccccccccccccccccccccccc cccccccccccccccccccccccc ccccccccccccccccccccccccccc ccccccccccccccccccccccccc cccccccccccccccccccccccccc ccccccccccccccccccccccccccccccccc ccccccccccccccccccccccccccccc cccccccccccccccccccccccc cccccccccccccccccccccccccc cccccccccccccccccccccccccc cccccccccccccccccccccccccc cccccccccccccccccccccccccccccccc Yetsom Beyaynetu is an Ethiopian is an Ethiopianis an Ethiopian is an Ethiopian is an Ethiopian is an Ethiopian is an Ethiopian is an Ethiopian is an Ethiopian is an Ethiopian is an Ethiopian is an Ethiopian is an Ethiopian is an Ethiopian combination platter composed of vegan curries and veggies. We love the variety this type of dinner offers. Our version features a rich red lentil stew, tender collard greens simmered with tomatoes and warming berbere spice blend, and a spicy fresh tomato salad with chiles.'),
+                          'Yetsom Beyaynetu is an Ethiopian is an Ethiopianis an Ethiopian is an Ethiopian is an Ethiopian is an Ethiopian is an Ethiopian is an Ethiopian is an Ethiopian is an Ethiopian is an Ethiopian is an Ethiopian is an Ethiopian is an Ethiopian combination platter composed of vegan curries and veggies. We love the variety this type of dinner offers. Our version features a rich red lentil stew, tender collard greens simmered with tomatoes and warming berbere spice blend, and a spicy fresh tomato salad with chiles.'),
                 ),
               ],
             ),

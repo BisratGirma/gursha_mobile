@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
           // is not restarted.
           primarySwatch: Colors.amber,
           backgroundColor: Colors.white70),
-      home: const RecommendedFoodDetail(),
+      home: const MainFoodPage(),
     );
   }
 }
