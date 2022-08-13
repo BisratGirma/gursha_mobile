@@ -5,7 +5,7 @@ import 'package:gursha/data/repository/popular_product_repo.dart';
 
 Future<void> init() async {
   //api client
-  Get.lazyPut(() => ApiClient(appBaseUrl: 'https://a.com'));
+  Get.lazyPut(() => ApiClient(appBaseUrl: 'http://mvs.bslmeiyu.com'));
 
   //repo
   Get.lazyPut(() => PopularProductRepo(apiClient: Get.find()));

@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:gursha/controllers/popular_product_controller.dart';
 import 'package:gursha/helper/dependencies.dart' as dependency;
 import 'package:gursha/screens/foods/popular_food_detail.dart';
 import 'package:gursha/screens/foods/recommended_food_detail.dart';
@@ -18,6 +19,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    Get.find<PopularProductController>().getPopularProductList();
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       scrollBehavior: AppScrollBehavior(),
