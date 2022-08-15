@@ -1,5 +1,10 @@
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:gursha/controllers/popular_product_controller.dart';
+import 'package:gursha/controllers/recommended_product_controller.dart';
+import 'package:gursha/models/products_model.dart';
+import 'package:gursha/util/app_constants.dart';
 import 'package:gursha/util/colors.dart';
 import 'package:gursha/util/dimensions.dart';
 import 'package:gursha/widgets/app_column.dart';
@@ -38,23 +43,42 @@ class _FoodPageBodyState extends State<FoodPageBody> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Container(
-          height: Dimensions.pageView,
-          child: PageView.builder(
-              controller: pageController,
-              itemCount: 5,
-              itemBuilder: (context, position) => _buildPageItem(position)),
+        //slides
+        GetBuilder<PopularProductController>(
+          builder: (popularProducts) => popularProducts.isLoaded
+              ? Container(
+                  height: Dimensions.pageView,
+                  child: PageView.builder(
+                      controller: pageController,
+                      itemCount: popularProducts.popularProductList.isEmpty
+                          ? 0
+                          : popularProducts.popularProductList.length,
+                      itemBuilder: (context, position) => _buildPageItem(
+                          position,
+                          popularProducts.popularProductList[position])),
+                )
+              : const CircularProgressIndicator(
+                  color: AppColors.mainColor,
+                ),
         ),
-        DotsIndicator(
-          dotsCount: 5,
-          position: _currentPageValue,
-          decorator: DotsDecorator(
-            size: const Size.square(9.0),
-            activeSize: const Size(18.0, 9.0),
-            activeShape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(5.0)),
-          ),
-        ),
+
+        //Dots showing how many slides are there
+        GetBuilder<PopularProductController>(builder: (popularProducts) {
+          return popularProducts.isLoaded
+              ? DotsIndicator(
+                  dotsCount: popularProducts.popularProductList.isEmpty
+                      ? 1
+                      : popularProducts.popularProductList.length,
+                  position: _currentPageValue,
+                  decorator: DotsDecorator(
+                    size: const Size.square(9.0),
+                    activeSize: const Size(18.0, 9.0),
+                    activeShape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5.0)),
+                  ),
+                )
+              : Container();
+        }),
         SizedBox(height: Dimensions.height20),
         Container(
           margin: EdgeInsets.only(
@@ -62,7 +86,7 @@ class _FoodPageBodyState extends State<FoodPageBody> {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              HeadingText(text: 'Popular'),
+              HeadingText(text: 'Recommended'),
               SizedBox(width: Dimensions.width10),
               Container(
                   margin: const EdgeInsets.only(bottom: 3),
@@ -80,38 +104,45 @@ class _FoodPageBodyState extends State<FoodPageBody> {
             ],
           ),
         ),
-        ListView.builder(
-            physics: const NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            itemCount: 10,
-            itemBuilder: (context, index) => Container(
-                  margin: EdgeInsets.only(
-                      left: Dimensions.width24,
-                      right: Dimensions.width24,
-                      bottom: Dimensions.height15),
-                  child: Row(children: [
-                    Container(
-                      width: Dimensions.listViewImg,
-                      height: Dimensions.listViewImg,
-                      decoration: BoxDecoration(
-                          borderRadius:
-                              BorderRadius.circular(Dimensions.radius20),
-                          color: Colors.white24,
-                          image: const DecorationImage(
-                              fit: BoxFit.cover,
-                              image: AssetImage('assets/images/pizza.jpeg'))),
-                    ),
-                    const Expanded(
-                        child: AppColumn(
-                      title: 'Traditional Rich Meals',
-                    ))
-                  ]),
-                ))
+        GetBuilder<RecommendedProductController>(builder: (recommendedProduct) {
+          return recommendedProduct.isLoaded
+              ? ListView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: 10,
+                  itemBuilder: (context, index) => Container(
+                        margin: EdgeInsets.only(
+                            left: Dimensions.width24,
+                            right: Dimensions.width24,
+                            bottom: Dimensions.height15),
+                        child: Row(children: [
+                          Container(
+                            width: Dimensions.listViewImg,
+                            height: Dimensions.listViewImg,
+                            decoration: BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.circular(Dimensions.radius20),
+                                color: Color.fromARGB(60, 78, 60, 60),
+                                image: const DecorationImage(
+                                    fit: BoxFit.cover,
+                                    image: AssetImage(
+                                        'assets/images/pizza.jpeg'))),
+                          ),
+                          const Expanded(
+                              child: AppColumn(
+                            title: 'Traditional Rich Meals',
+                          ))
+                        ]),
+                      ))
+              : const CircularProgressIndicator(
+                  color: AppColors.mainColor,
+                );
+        })
       ],
     );
   }
 
-  Widget _buildPageItem(int index) {
+  Widget _buildPageItem(index, ProductsModel popularProduct) {
     Matrix4 matrix = Matrix4.identity();
     if (index == _currentPageValue.floor()) {
       var currentScale = 1 - (_currentPageValue - index) * (1 - _scaleFactor);
@@ -145,9 +176,10 @@ class _FoodPageBodyState extends State<FoodPageBody> {
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(Dimensions.radius30),
                 color: index.isOdd ? Colors.amberAccent : Colors.blueAccent,
-                image: const DecorationImage(
+                image: DecorationImage(
                     fit: BoxFit.cover,
-                    image: AssetImage('assets/images/beyaynet.jpg'))),
+                    image: NetworkImage(
+                        "${AppConstants.BASE_URL}/uploads/${popularProduct.img}"))),
           ),
           Align(
             alignment: Alignment.bottomCenter,
@@ -177,7 +209,7 @@ class _FoodPageBodyState extends State<FoodPageBody> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        HeadingText(text: 'Beyaynet'),
+                        HeadingText(text: popularProduct.name!),
                         SizedBox(
                           height: Dimensions.height10,
                         ),
