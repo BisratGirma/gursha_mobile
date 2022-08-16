@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:gursha/controllers/popular_product_controller.dart';
 import 'package:gursha/controllers/recommended_product_controller.dart';
 import 'package:gursha/models/products_model.dart';
+import 'package:gursha/routes/route_guide.dart';
+import 'package:gursha/screens/foods/popular_food_detail.dart';
 import 'package:gursha/util/app_constants.dart';
 import 'package:gursha/util/colors.dart';
 import 'package:gursha/util/dimensions.dart';
@@ -109,30 +111,38 @@ class _FoodPageBodyState extends State<FoodPageBody> {
               ? ListView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-                  itemCount: 10,
-                  itemBuilder: (context, index) => Container(
-                        margin: EdgeInsets.only(
-                            left: Dimensions.width24,
-                            right: Dimensions.width24,
-                            bottom: Dimensions.height15),
-                        child: Row(children: [
-                          Container(
-                            width: Dimensions.listViewImg,
-                            height: Dimensions.listViewImg,
-                            decoration: BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.circular(Dimensions.radius20),
-                                color: Color.fromARGB(60, 78, 60, 60),
-                                image: const DecorationImage(
-                                    fit: BoxFit.cover,
-                                    image: AssetImage(
-                                        'assets/images/pizza.jpeg'))),
-                          ),
-                          const Expanded(
-                              child: AppColumn(
-                            title: 'Traditional Rich Meals',
-                          ))
-                        ]),
+                  itemCount: recommendedProduct.recommendedProductList.length,
+                  itemBuilder: (context, index) => GestureDetector(
+                        onTap: () =>
+                            Get.toNamed(RouteGuide.getrecommendedFood()),
+                        child: Container(
+                          margin: EdgeInsets.only(
+                              left: Dimensions.width24,
+                              right: Dimensions.width24,
+                              bottom: Dimensions.height15),
+                          child: Row(children: [
+                            Container(
+                              width: Dimensions.listViewImg,
+                              height: Dimensions.listViewImg,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(
+                                      Dimensions.radius20),
+                                  color: Color.fromRGBO(78, 60, 60, 0.235),
+                                  image: DecorationImage(
+                                      fit: BoxFit.cover,
+                                      image: AssetImage(AppConstants.BASE_URL +
+                                          AppConstants.UPLOAD_URL +
+                                          recommendedProduct
+                                              .recommendedProductList[index]
+                                              .img!))),
+                            ),
+                            Expanded(
+                                child: AppColumn(
+                              title: recommendedProduct
+                                  .recommendedProductList[index].name!,
+                            ))
+                          ]),
+                        ),
                       ))
               : const CircularProgressIndicator(
                   color: AppColors.mainColor,
@@ -169,17 +179,23 @@ class _FoodPageBodyState extends State<FoodPageBody> {
       transform: matrix,
       child: Stack(
         children: [
-          Container(
-            height: Dimensions.pageViewContainer,
-            margin: EdgeInsets.only(
-                left: Dimensions.width33, right: Dimensions.width33),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(Dimensions.radius30),
-                color: index.isOdd ? Colors.amberAccent : Colors.blueAccent,
-                image: DecorationImage(
-                    fit: BoxFit.cover,
-                    image: NetworkImage(
-                        "${AppConstants.BASE_URL}/uploads/${popularProduct.img}"))),
+          GestureDetector(
+            onTap: () {
+              Get.toNamed(RouteGuide.getPopularFood());
+            },
+            child: Container(
+              height: Dimensions.pageViewContainer,
+              margin: EdgeInsets.only(
+                  left: Dimensions.width33, right: Dimensions.width33),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(Dimensions.radius30),
+                  color: index.isOdd ? Colors.amberAccent : Colors.blueAccent,
+                  image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: NetworkImage(AppConstants.BASE_URL +
+                          AppConstants.UPLOAD_URL +
+                          popularProduct.img!))),
+            ),
           ),
           Align(
             alignment: Alignment.bottomCenter,

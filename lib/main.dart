@@ -4,9 +4,7 @@ import 'package:get/get.dart';
 import 'package:gursha/controllers/popular_product_controller.dart';
 import 'package:gursha/controllers/recommended_product_controller.dart';
 import 'package:gursha/helper/dependencies.dart' as dependency;
-import 'package:gursha/screens/foods/popular_food_detail.dart';
-import 'package:gursha/screens/foods/recommended_food_detail.dart';
-import 'package:gursha/screens/home/food_page_body.dart';
+import 'package:gursha/routes/route_guide.dart';
 import 'package:gursha/screens/home/main_food_page.dart';
 
 void main() async {
@@ -27,19 +25,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       scrollBehavior: AppScrollBehavior(),
       title: 'Gursha',
-      theme: ThemeData(
-          // This is the theme of your application.
-          //
-          // Try running your application with "flutter run". You'll see the
-          // application has a blue toolbar. Then, without quitting the app, try
-          // changing the primarySwatch below to Colors.green and then invoke
-          // "hot reload" (press "r" in the console where you ran "flutter run",
-          // or simply save your changes to "hot reload" in a Flutter IDE).
-          // Notice that the counter didn't reset back to zero; the application
-          // is not restarted.
-          primarySwatch: Colors.amber,
-          backgroundColor: Colors.white70),
       home: const MainFoodPage(),
+      initialRoute: RouteGuide.initial,
+      getPages: RouteGuide.routes,
     );
   }
 }

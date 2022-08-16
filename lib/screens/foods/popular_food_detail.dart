@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:gursha/routes/route_guide.dart';
+import 'package:gursha/screens/home/main_food_page.dart';
 import 'package:gursha/util/colors.dart';
 import 'package:gursha/util/dimensions.dart';
 import 'package:gursha/widgets/app_column.dart';
@@ -30,8 +33,12 @@ class PopularFoodDetail extends StatelessWidget {
             right: Dimensions.width10,
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
-                  AppIcon(icon: Icons.arrow_back_ios_new),
+                children: [
+                  GestureDetector(
+                      onTap: () {
+                        Get.toNamed(RouteGuide.initial);
+                      },
+                      child: AppIcon(icon: Icons.arrow_back_ios_new)),
                   AppIcon(icon: Icons.shopping_cart_outlined)
                 ]),
           ),

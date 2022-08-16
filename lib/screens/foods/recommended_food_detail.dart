@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:gursha/routes/route_guide.dart';
 import 'package:gursha/util/colors.dart';
 import 'package:gursha/util/dimensions.dart';
 import 'package:gursha/widgets/app_icon.dart';
@@ -15,11 +17,16 @@ class RecommendedFoodDetail extends StatelessWidget {
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
+            automaticallyImplyLeading: false,
             toolbarHeight: 70,
             title: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
-                  AppIcon(icon: Icons.clear),
+                children: [
+                  GestureDetector(
+                      onTap: () {
+                        Get.toNamed(RouteGuide.getInitial());
+                      },
+                      child: const AppIcon(icon: Icons.clear)),
                   AppIcon(icon: Icons.shopping_cart_outlined)
                 ]),
             bottom: PreferredSize(
