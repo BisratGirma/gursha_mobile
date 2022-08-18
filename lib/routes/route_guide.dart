@@ -9,18 +9,25 @@ class RouteGuide {
   static const String recommendedFood = "/recommended-food";
 
   static String getInitial() => '$initial';
-  static String getPopularFood() => '$popularFood';
-  static String getrecommendedFood() => '$recommendedFood';
+  static String getPopularFood(int pageId) => '$popularFood?pageId=$pageId';
+  static String getrecommendedFood(int pageId) =>
+      '$recommendedFood?pageId=$pageId';
 
   static List<GetPage> routes = [
     GetPage(name: '/', page: () => const MainFoodPage()),
     GetPage(
         name: popularFood,
-        page: () => const PopularFoodDetail(),
+        page: () {
+          var pageId = Get.parameters['pageId'];
+          return PopularFoodDetail(pageId: int.parse(pageId!));
+        },
         transition: Transition.cupertino),
     GetPage(
         name: recommendedFood,
-        page: () => const RecommendedFoodDetail(),
+        page: () {
+          var pageId = Get.parameters['pageId'];
+          return RecommendedFoodDetail(pageId: int.parse(pageId!));
+        },
         transition: Transition.cupertino),
   ];
 }

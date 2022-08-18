@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:gursha/controllers/popular_product_controller.dart';
 import 'package:gursha/routes/route_guide.dart';
-import 'package:gursha/screens/home/main_food_page.dart';
+import 'package:gursha/util/app_constants.dart';
 import 'package:gursha/util/colors.dart';
 import 'package:gursha/util/dimensions.dart';
 import 'package:gursha/widgets/app_column.dart';
@@ -10,10 +11,14 @@ import 'package:gursha/widgets/expandable_text.dart';
 import 'package:gursha/widgets/heading.dart';
 
 class PopularFoodDetail extends StatelessWidget {
-  const PopularFoodDetail({Key? key}) : super(key: key);
+  final int pageId;
+  const PopularFoodDetail({Key? key, required this.pageId}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    var product =
+        Get.find<PopularProductController>().popularProductList[pageId];
+
     return Scaffold(
         body: Stack(children: [
           Positioned(
@@ -22,10 +27,12 @@ class PopularFoodDetail extends StatelessWidget {
             child: Container(
                 width: double.maxFinite,
                 height: Dimensions.popularImgSize,
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
                     image: DecorationImage(
                         fit: BoxFit.cover,
-                        image: AssetImage('assets/images/beyaynet.jpg')))),
+                        image: NetworkImage(AppConstants.BASE_URL +
+                            AppConstants.UPLOAD_URL +
+                            product.img!)))),
           ),
           Positioned(
             top: Dimensions.height15,
@@ -38,8 +45,8 @@ class PopularFoodDetail extends StatelessWidget {
                       onTap: () {
                         Get.toNamed(RouteGuide.initial);
                       },
-                      child: AppIcon(icon: Icons.arrow_back_ios_new)),
-                  AppIcon(icon: Icons.shopping_cart_outlined)
+                      child: const AppIcon(icon: Icons.arrow_back_ios_new)),
+                  const AppIcon(icon: Icons.shopping_cart_outlined)
                 ]),
           ),
           Positioned(
@@ -60,59 +67,70 @@ class PopularFoodDetail extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      AppColumn(
-                          title: 'Traditional Rich Foods',
-                          size: Dimensions.font27),
+                      AppColumn(title: product.name!, size: Dimensions.font27),
                       SizedBox(height: Dimensions.height20),
                       HeadingText(text: 'Introduce'),
                       SizedBox(
                         height: Dimensions.height20,
                       ),
-                      const Expanded(
-                        child: SingleChildScrollView(
-                          child: ExpandableText(
-                              text:
-                                  'Yetsom Beyaynetu is an Ethiopian combination platter composed of vegan curries and veggies. We love the variety this type of dinner offers. Our version features a rich red lentil stew, tender collard greens simmered with tomatoes and warming berbere spice blend, and a spicy fresh tomato salad with chiles.'),
-                        ),
-                      )
+                      Expanded(
+                          child: SingleChildScrollView(
+                        child: ExpandableText(text: product.description!),
+                      ))
                     ],
                   )))
         ]),
-        bottomNavigationBar: Container(
-            height: Dimensions.navbarHeight,
-            padding: EdgeInsets.all(
-              Dimensions.height20,
-            ),
-            decoration: BoxDecoration(
-                color: AppColors.backgroundColors,
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(Dimensions.radius20 * 2),
-                    topRight: Radius.circular(Dimensions.radius20 * 2))),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  padding: EdgeInsets.all(Dimensions.height20),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(Dimensions.radius30),
-                      color: Colors.white),
-                  child: Row(children: [
-                    const Icon(Icons.remove, color: AppColors.signColor),
-                    HeadingText(text: '0'),
-                    const Icon(Icons.add, color: AppColors.signColor)
-                  ]),
-                ),
-                Container(
-                  padding: EdgeInsets.all(Dimensions.height20),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(Dimensions.radius30),
-                      color: AppColors.passColor),
-                  child: HeadingText(
-                    text: '\$10 | Add to Cart',
-                    color: Colors.white,
+        bottomNavigationBar:
+            GetBuilder<PopularProductController>(builder: (popularProduct) {
+          return Container(
+              height: Dimensions.navbarHeight,
+              padding: EdgeInsets.all(
+                Dimensions.height20,
+              ),
+              decoration: BoxDecoration(
+                  color: AppColors.backgroundColors,
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(Dimensions.radius20 * 2),
+                      topRight: Radius.circular(Dimensions.radius20 * 2))),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(Dimensions.height20),
+                    decoration: BoxDecoration(
+                        borderRadius:
+                            BorderRadius.circular(Dimensions.radius30),
+                        color: Colors.white),
+                    child: Row(children: [
+                      GestureDetector(
+                          onTap: () {
+                            popularProduct.setQuantity(false);
+                          },
+                          child: const Icon(Icons.remove,
+                              color: AppColors.signColor)),
+                      HeadingText(text: '${popularProduct.quantity}'),
+                      GestureDetector(
+                          onTap: () {
+                            popularProduct.setQuantity(true);
+                          },
+                          child:
+                              const Icon(Icons.add, color: AppColors.signColor))
+                    ]),
                   ),
-                )
-              ],
-            )));
+                  Container(
+                    padding: EdgeInsets.all(Dimensions.height20),
+                    decoration: BoxDecoration(
+                        borderRadius:
+                            BorderRadius.circular(Dimensions.radius30),
+                        color: AppColors.passColor),
+                    child: HeadingText(
+                      text:
+                          '\$${product.price! * popularProduct.quantity == 0 ? 1 : popularProduct.quantity} | Add to Cart',
+                      color: Colors.white,
+                    ),
+                  )
+                ],
+              ));
+        }));
   }
 }

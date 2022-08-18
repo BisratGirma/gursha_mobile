@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:gursha/controllers/recommended_product_controller.dart';
 import 'package:gursha/routes/route_guide.dart';
+import 'package:gursha/util/app_constants.dart';
 import 'package:gursha/util/colors.dart';
 import 'package:gursha/util/dimensions.dart';
 import 'package:gursha/widgets/app_icon.dart';
@@ -8,10 +10,14 @@ import 'package:gursha/widgets/expandable_text.dart';
 import 'package:gursha/widgets/heading.dart';
 
 class RecommendedFoodDetail extends StatelessWidget {
-  const RecommendedFoodDetail({Key? key}) : super(key: key);
+  final int pageId;
+  const RecommendedFoodDetail({Key? key, required this.pageId})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    var product =
+        Get.find<RecommendedProductController>().recommendedProductList[pageId];
     return Scaffold(
       backgroundColor: Colors.white,
       body: CustomScrollView(
@@ -42,15 +48,17 @@ class RecommendedFoodDetail extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 5, bottom: 10),
                 child: Center(
                     child: HeadingText(
-                        text: 'Yetsom Beyaynetu', size: Dimensions.font27)),
+                        text: product.name!, size: Dimensions.font27)),
               ),
             ),
             pinned: true,
-            backgroundColor: AppColors.mainColor,
+            backgroundColor: Color.fromRGBO(255, 193, 7, 1),
             expandedHeight: 300,
+
+            // Background Image of the sliver
             flexibleSpace: FlexibleSpaceBar(
-              background: Image.asset(
-                'assets/images/beyaynet.jpg',
+              background: Image.network(
+                AppConstants.BASE_URL + AppConstants.UPLOAD_URL + product.img!,
                 width: double.maxFinite,
                 fit: BoxFit.cover,
               ),
@@ -63,9 +71,7 @@ class RecommendedFoodDetail extends StatelessWidget {
                   margin: EdgeInsets.only(
                       left: Dimensions.width24, right: Dimensions.width24),
                   child: ExpandableText(
-                      size: Dimensions.font20,
-                      text:
-                          'Yetsom Beyaynetu is an Ethiopian is an Ethiopianis an Ethiopian is an Ethiopian is an Ethiopian is an Ethiopian is an Ethiopian is an Ethiopian is an Ethiopian is an Ethiopian is an Ethiopian is an Ethiopian is an Ethiopian is an Ethiopian combination platter composed of vegan curries and veggies. We love the variety this type of dinner offers. Our version features a rich red lentil stew, tender collard greens simmered with tomatoes and warming berbere spice blend, and a spicy fresh tomato salad with chiles.'),
+                      size: Dimensions.font20, text: product.description!),
                 ),
               ],
             ),
@@ -89,7 +95,7 @@ class RecommendedFoodDetail extends StatelessWidget {
                     iconColor: Colors.white,
                     backgroundColor: AppColors.mainColor,
                     icon: Icons.remove),
-                HeadingText(text: '\$99.99  ${'x'}  ${0}'),
+                HeadingText(text: '\$${product.price}  X  0'),
                 AppIcon(
                     iconSize: Dimensions.iconSize24,
                     iconColor: Colors.white,
@@ -125,8 +131,10 @@ class RecommendedFoodDetail extends StatelessWidget {
                         borderRadius:
                             BorderRadius.circular(Dimensions.radius30),
                         color: AppColors.passColor),
+
+                    //price
                     child: HeadingText(
-                      text: '\$10 | Add to Cart',
+                      text: '\$${product.price} | Add to Cart',
                       color: Colors.white,
                     ),
                   )
