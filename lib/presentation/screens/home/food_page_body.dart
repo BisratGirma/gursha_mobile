@@ -1,18 +1,16 @@
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:gursha/controllers/popular_product_controller.dart';
-import 'package:gursha/controllers/recommended_product_controller.dart';
-import 'package:gursha/models/products_model.dart';
-import 'package:gursha/routes/route_guide.dart';
-import 'package:gursha/screens/foods/popular_food_detail.dart';
-import 'package:gursha/util/app_constants.dart';
-import 'package:gursha/util/colors.dart';
-import 'package:gursha/util/dimensions.dart';
-import 'package:gursha/widgets/app_column.dart';
-import 'package:gursha/widgets/heading.dart';
-import 'package:gursha/widgets/icon_and_text.dart';
-import 'package:gursha/widgets/small_heading.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gursha/bloc/home/home.dart';
+import 'package:gursha/data/api_client.dart';
+import 'package:gursha/data/models/products_model.dart';
+import 'package:gursha/presentation/util/app_constants.dart';
+import 'package:gursha/presentation/util/colors.dart';
+import 'package:gursha/presentation/util/dimensions.dart';
+import 'package:gursha/presentation/widgets/app_column.dart';
+import 'package:gursha/presentation/widgets/heading.dart';
+import 'package:gursha/presentation/widgets/icon_and_text.dart';
+import 'package:gursha/presentation/widgets/small_heading.dart';
 
 class FoodPageBody extends StatefulWidget {
   const FoodPageBody({Key? key}) : super(key: key);
@@ -43,34 +41,45 @@ class _FoodPageBodyState extends State<FoodPageBody> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        //slides
-        GetBuilder<PopularProductController>(
-          builder: (popularProducts) => popularProducts.isLoaded
-              ? Container(
+    return BlocProvider(
+      create: (context) => HomeBloc(ApiClient())..add(LoadApiEvent()),
+      child: BlocBuilder<HomeBloc, HomeState>(
+        builder: (context, state) {
+          if (state is HomeInitial) {
+            return const Center(
+                child: CircularProgressIndicator(
+              color: AppColors.mainColor,
+            ));
+          }
+          if (state is HomeLoaded) {
+            return Column(
+              children: [
+                //slides
+                // GetBuilder<PopularProductController>(
+                //   builder: (popularProducts) => popularProducts.isLoaded
+                //       ?
+                SizedBox(
                   height: Dimensions.pageView,
                   child: PageView.builder(
                       controller: pageController,
-                      itemCount: popularProducts.popularProductList.isEmpty
+                      itemCount: state.popularProduct.products.isEmpty
                           ? 0
-                          : popularProducts.popularProductList.length,
+                          : state.popularProduct.products.length,
                       itemBuilder: (context, position) => _buildPageItem(
-                          position,
-                          popularProducts.popularProductList[position])),
-                )
-              : const CircularProgressIndicator(
-                  color: AppColors.mainColor,
+                          position, state.popularProduct.products[position])),
                 ),
-        ),
+                // : const CircularProgressIndicator(
+                //     color: AppColors.mainColor,
+                //   ),
+                // ),
 
-        //Dots showing how many slides are there
-        GetBuilder<PopularProductController>(builder: (popularProducts) {
-          return popularProducts.isLoaded
-              ? DotsIndicator(
-                  dotsCount: popularProducts.popularProductList.isEmpty
+                //Dots showing how many slides are there
+                // GetBuilder<PopularProductController>(builder: (popularProducts) {
+                //   return
+                DotsIndicator(
+                  dotsCount: state.popularProduct.products.isEmpty
                       ? 1
-                      : popularProducts.popularProductList.length,
+                      : state.popularProduct.products.length,
                   position: _currentPageValue,
                   decorator: DotsDecorator(
                     size: const Size.square(9.0),
@@ -79,76 +88,87 @@ class _FoodPageBodyState extends State<FoodPageBody> {
                         borderRadius: BorderRadius.circular(5.0)),
                   ),
                 )
-              : Container();
-        }),
-        SizedBox(height: Dimensions.height20),
-        Container(
-          margin: EdgeInsets.only(
-              left: Dimensions.width33, bottom: Dimensions.height20),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              HeadingText(text: 'Recommended'),
-              SizedBox(width: Dimensions.width10),
-              Container(
-                  margin: const EdgeInsets.only(bottom: 3),
-                  child: HeadingText(
-                    text: '.',
-                    color: Colors.black26,
-                  )),
-              SizedBox(
-                width: Dimensions.width10,
-              ),
-              Container(
-                margin: const EdgeInsets.only(bottom: 2),
-                child: SmallHeadingText(text: 'Food pairing'),
-              ),
-            ],
-          ),
-        ),
-        GetBuilder<RecommendedProductController>(builder: (recommendedProduct) {
-          return recommendedProduct.isLoaded
-              ? ListView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: recommendedProduct.recommendedProductList.length,
-                  itemBuilder: (context, index) => GestureDetector(
-                        onTap: () =>
-                            Get.toNamed(RouteGuide.getrecommendedFood(index)),
-                        child: Container(
-                          margin: EdgeInsets.only(
-                              left: Dimensions.width24,
-                              right: Dimensions.width24,
-                              bottom: Dimensions.height15),
-                          child: Row(children: [
-                            Container(
-                              width: Dimensions.listViewImg,
-                              height: Dimensions.listViewImg,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(
-                                      Dimensions.radius20),
-                                  color: Color.fromRGBO(78, 60, 60, 0.235),
-                                  image: DecorationImage(
-                                      fit: BoxFit.cover,
-                                      image: AssetImage(AppConstants.BASE_URL +
-                                          AppConstants.UPLOAD_URL +
-                                          recommendedProduct
-                                              .recommendedProductList[index]
-                                              .img!))),
-                            ),
-                            Expanded(
-                                child: AppColumn(
-                              title: recommendedProduct
-                                  .recommendedProductList[index].name!,
+                //       ;
+                // })
+                ,
+                SizedBox(height: Dimensions.height20),
+                Container(
+                  margin: EdgeInsets.only(
+                      left: Dimensions.width33, bottom: Dimensions.height20),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      HeadingText(text: 'Recommended'),
+                      SizedBox(width: Dimensions.width10),
+                      Container(
+                          margin: const EdgeInsets.only(bottom: 3),
+                          child: HeadingText(
+                            text: '.',
+                            color: Colors.black26,
+                          )),
+                      SizedBox(
+                        width: Dimensions.width10,
+                      ),
+                      Container(
+                        margin: const EdgeInsets.only(bottom: 2),
+                        child: SmallHeadingText(text: 'Food pairing'),
+                      ),
+                    ],
+                  ),
+                ),
+                // GetBuilder<RecommendedProductController>(
+                //     builder: (recommendedProduct) {
+                //   return
+                state.recommendedProduct.products.isNotEmpty
+                    ? ListView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: state.recommendedProduct.products.length,
+                        itemBuilder: (context, index) => GestureDetector(
+                              onTap: () {},
+                              child: Container(
+                                margin: EdgeInsets.only(
+                                    left: Dimensions.width24,
+                                    right: Dimensions.width24,
+                                    bottom: Dimensions.height15),
+                                child: Row(children: [
+                                  Container(
+                                    width: Dimensions.listViewImg,
+                                    height: Dimensions.listViewImg,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(
+                                            Dimensions.radius20),
+                                        color:
+                                            Color.fromRGBO(78, 60, 60, 0.235),
+                                        image: DecorationImage(
+                                            fit: BoxFit.cover,
+                                            image: AssetImage(
+                                                AppConstants.BASE_URL +
+                                                    AppConstants.UPLOAD_URL +
+                                                    state
+                                                        .recommendedProduct
+                                                        .products[index]
+                                                        .img!))),
+                                  ),
+                                  Expanded(
+                                      child: AppColumn(
+                                    title: state.recommendedProduct
+                                        .products[index].name!,
+                                  ))
+                                ]),
+                              ),
                             ))
-                          ]),
-                        ),
-                      ))
-              : const CircularProgressIndicator(
-                  color: AppColors.mainColor,
-                );
-        })
-      ],
+                    : const CircularProgressIndicator(
+                        color: AppColors.mainColor,
+                      )
+                //         ;
+                // })
+              ],
+            );
+          }
+          return Container();
+        },
+      ),
     );
   }
 
@@ -181,7 +201,7 @@ class _FoodPageBodyState extends State<FoodPageBody> {
         children: [
           GestureDetector(
             onTap: () {
-              Get.toNamed(RouteGuide.getPopularFood(index));
+              // Get.toNamed(RouteGuide.getPopularFood(index));
             },
             child: Container(
               height: Dimensions.pageViewContainer,

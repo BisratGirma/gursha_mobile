@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:gursha/util/colors.dart';
-import 'package:gursha/util/dimensions.dart';
-import 'package:gursha/widgets/heading.dart';
-import 'package:gursha/widgets/icon_and_text.dart';
-import 'package:gursha/widgets/small_heading.dart';
+import 'package:gursha/presentation/util/colors.dart';
+import 'package:gursha/presentation/util/dimensions.dart';
+import 'package:gursha/presentation/widgets/heading.dart';
+import 'package:gursha/presentation/widgets/icon_and_text.dart';
+import 'package:gursha/presentation/widgets/small_heading.dart';
 
 class AppColumn extends StatelessWidget {
   final String title;
@@ -34,10 +34,10 @@ class AppColumn extends StatelessWidget {
               Wrap(
                 children: List.generate(
                     5,
-                    (index) => const Icon(
+                    (index) => Icon(
                           Icons.star,
                           color: AppColors.mainColor,
-                          size: 15,
+                          size: Dimensions.iconSize10,
                         )),
               ),
               SizedBox(

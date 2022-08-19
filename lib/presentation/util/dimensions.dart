@@ -1,9 +1,10 @@
-import 'package:get/get.dart';
+import 'package:flutter/widgets.dart';
+
+Size size = WidgetsBinding.instance.window.physicalSize;
+double screenHeight = size.height;
+double screenWidth = size.width;
 
 class Dimensions {
-  static double screenHeight = Get.context!.height;
-  static double screenWidth = Get.context!.width;
-
   //dyanmic page view values for body
   static double pageView = screenHeight / 2.43;
   static double pageViewContainer = screenHeight / 3.6;
@@ -33,10 +34,11 @@ class Dimensions {
   //icon size
   static double iconSize24 = screenHeight / 34.7;
   static double iconSize16 = screenHeight / 52.2;
+  static double iconSize10 = screenHeight / 72;
 
   //list view sizes
   static double listViewImg = screenWidth / 3.24;
-  static double listViewTextContainer = screenWidth / 3.9;
+  static double listViewTextContainer = screenWidth / 4.2;
 
   //popular detail sizes
   static double popularImgSize = screenWidth / 2.01;

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gursha/util/dimensions.dart';
+import 'package:gursha/presentation/util/dimensions.dart';
 
 class HeadingText extends StatelessWidget {
   Color? color;

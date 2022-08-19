@@ -1,3 +1,7 @@
+import 'dart:convert';
+
+Product getProductFromJson(String str) => Product.fromJson(json.decode(str));
+
 class Product {
   int? _totalSize;
   int? _typeId;

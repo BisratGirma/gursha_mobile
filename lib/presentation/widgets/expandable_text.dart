@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:gursha/util/colors.dart';
-import 'package:gursha/util/dimensions.dart';
-import 'package:gursha/widgets/small_heading.dart';
+import 'package:gursha/presentation/util/colors.dart';
+import 'package:gursha/presentation/util/dimensions.dart';
+import 'package:gursha/presentation/widgets/small_heading.dart';
 
 class ExpandableText extends StatefulWidget {
   final String text;
@@ -17,7 +17,7 @@ class _ExpandableTextState extends State<ExpandableText> {
   late String firstPart;
   late String secondPart;
   bool hiddenText = true;
-  double textHeight = Dimensions.screenHeight / 5.61;
+  double textHeight = Dimensions.height120;
 
   @override
   void initState() {
