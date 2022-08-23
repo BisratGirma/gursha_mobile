@@ -1,19 +1,13 @@
+import 'package:beamer/beamer.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gursha/bloc/home/bloc/home_bloc.dart';
-import 'package:gursha/data/api_client.dart';
+import 'package:gursha/data/models/products_model.dart';
+import 'package:gursha/presentation/screens/foods/popular_food_detail.dart';
+import 'package:gursha/presentation/screens/foods/recommended_food_detail.dart';
 import 'package:gursha/presentation/screens/home/main_food_page.dart';
 
-// import 'package:get/get.dart';
-// import 'package:gursha/controllers/popular_product_controller.dart';
-// import 'package:gursha/controllers/recommended_product_controller.dart';
-// import 'package:gursha/helper/dependencies.dart' as dependency;
-// import 'package:gursha/routes/route_guide.dart';
-// import 'package:gursha/screens/home/main_food_page.dart';
-
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  // WidgetsFlutterBinding.ensureInitialized();
   // await dependency.init();
   runApp(const MyApp());
 }
@@ -26,22 +20,39 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     // Get.find<PopularProductController>().getPopularProductList();
     // Get.find<RecommendedProductController>().getRecommendedProductList();
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        scrollBehavior: AppScrollBehavior(),
-        title: 'Gursha',
-        home: MultiBlocProvider(
-          providers: [
-            BlocProvider<HomeBloc>(
-              create: (context) => HomeBloc(ApiClient()),
-            )
-          ],
-          child: const MainFoodPage(),
-        )
+    return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
+      scrollBehavior: AppScrollBehavior(),
+      title: 'Gursha',
+      routeInformationParser: BeamerParser(),
+      routerDelegate: BeamerDelegate(
+          initialPath: '/',
+          notFoundPage: BeamPage.notFound,
+          locationBuilder: RoutesLocationBuilder(routes: {
+            '/': (p0, p1, p2) => const Home(),
+            '/popular/:id': (p0, p1, p2) {
+              final pageId = p1.pathParameters['id'];
+              final ProductsModel product = p2 as ProductsModel;
+              return BeamPage(
+                  key: ValueKey('popular-$pageId'),
+                  child: PopularFoodDetail(
+                    product: product,
+                  ));
+            },
+            '/recommended/:id': (p0, p1, p2) {
+              final pageId = p1.pathParameters['id'];
+              final ProductsModel product = p2 as ProductsModel;
+              return BeamPage(
+                  key: ValueKey('recommended-$pageId'),
+                  child: RecommendedFoodDetail(
+                    product: product,
+                  ));
+            }
+          })),
 
-        // initialRoute: RouteGuide.initial,
-        // getPages: RouteGuide.routes,
-        );
+      // initialRoute: RouteGuide.initial,
+      // getPages: RouteGuide.routes,
+    );
   }
 }
 
@@ -51,4 +62,13 @@ class AppScrollBehavior extends MaterialScrollBehavior {
         PointerDeviceKind.touch,
         PointerDeviceKind.mouse,
       };
+}
+
+class Home extends StatelessWidget {
+  const Home({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const MainFoodPage();
+  }
 }

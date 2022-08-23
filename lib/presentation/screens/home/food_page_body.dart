@@ -1,3 +1,4 @@
+import 'package:beamer/beamer.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,6 +11,7 @@ import 'package:gursha/presentation/util/dimensions.dart';
 import 'package:gursha/presentation/widgets/app_column.dart';
 import 'package:gursha/presentation/widgets/heading.dart';
 import 'package:gursha/presentation/widgets/icon_and_text.dart';
+import 'package:gursha/presentation/widgets/image_loader.dart';
 import 'package:gursha/presentation/widgets/small_heading.dart';
 
 class FoodPageBody extends StatefulWidget {
@@ -20,9 +22,13 @@ class FoodPageBody extends StatefulWidget {
 }
 
 class _FoodPageBodyState extends State<FoodPageBody> {
+//   @override
   PageController pageController = PageController(viewportFraction: 0.84);
+
   var _currentPageValue = 0.0;
+
   final double _scaleFactor = 0.8;
+
   final double _height = Dimensions.pageViewContainer;
 
   @override
@@ -34,11 +40,12 @@ class _FoodPageBodyState extends State<FoodPageBody> {
   }
 
   @override
-  // ignore: must_call_super
   void dispose() {
+    super.dispose();
     pageController.dispose();
   }
 
+  // @override
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -55,9 +62,6 @@ class _FoodPageBodyState extends State<FoodPageBody> {
             return Column(
               children: [
                 //slides
-                // GetBuilder<PopularProductController>(
-                //   builder: (popularProducts) => popularProducts.isLoaded
-                //       ?
                 SizedBox(
                   height: Dimensions.pageView,
                   child: PageView.builder(
@@ -66,16 +70,10 @@ class _FoodPageBodyState extends State<FoodPageBody> {
                           ? 0
                           : state.popularProduct.products.length,
                       itemBuilder: (context, position) => _buildPageItem(
-                          position, state.popularProduct.products[position])),
+                          position,
+                          state.popularProduct.products[position],
+                          context)),
                 ),
-                // : const CircularProgressIndicator(
-                //     color: AppColors.mainColor,
-                //   ),
-                // ),
-
-                //Dots showing how many slides are there
-                // GetBuilder<PopularProductController>(builder: (popularProducts) {
-                //   return
                 DotsIndicator(
                   dotsCount: state.popularProduct.products.isEmpty
                       ? 1
@@ -87,10 +85,7 @@ class _FoodPageBodyState extends State<FoodPageBody> {
                     activeShape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5.0)),
                   ),
-                )
-                //       ;
-                // })
-                ,
+                ),
                 SizedBox(height: Dimensions.height20),
                 Container(
                   margin: EdgeInsets.only(
@@ -116,39 +111,34 @@ class _FoodPageBodyState extends State<FoodPageBody> {
                     ],
                   ),
                 ),
-                // GetBuilder<RecommendedProductController>(
-                //     builder: (recommendedProduct) {
-                //   return
+
                 state.recommendedProduct.products.isNotEmpty
                     ? ListView.builder(
                         physics: const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
                         itemCount: state.recommendedProduct.products.length,
                         itemBuilder: (context, index) => GestureDetector(
-                              onTap: () {},
+                              onTap: () {
+                                context.beamToNamed('/recommended/$index',
+                                    data: state
+                                        .recommendedProduct.products[index]);
+                              },
                               child: Container(
                                 margin: EdgeInsets.only(
                                     left: Dimensions.width24,
                                     right: Dimensions.width24,
                                     bottom: Dimensions.height15),
                                 child: Row(children: [
-                                  Container(
-                                    width: Dimensions.listViewImg,
+                                  ImageLoader(
+                                    url: AppConstants.BASE_URL +
+                                        AppConstants.UPLOAD_URL +
+                                        state.recommendedProduct.products[index]
+                                            .img!,
                                     height: Dimensions.listViewImg,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(
-                                            Dimensions.radius20),
-                                        color:
-                                            Color.fromRGBO(78, 60, 60, 0.235),
-                                        image: DecorationImage(
-                                            fit: BoxFit.cover,
-                                            image: AssetImage(
-                                                AppConstants.BASE_URL +
-                                                    AppConstants.UPLOAD_URL +
-                                                    state
-                                                        .recommendedProduct
-                                                        .products[index]
-                                                        .img!))),
+                                    width: Dimensions.listViewImg,
+                                    fit: BoxFit.cover,
+                                    border: BorderRadius.circular(
+                                        Dimensions.radius20),
                                   ),
                                   Expanded(
                                       child: AppColumn(
@@ -161,8 +151,6 @@ class _FoodPageBodyState extends State<FoodPageBody> {
                     : const CircularProgressIndicator(
                         color: AppColors.mainColor,
                       )
-                //         ;
-                // })
               ],
             );
           }
@@ -172,7 +160,8 @@ class _FoodPageBodyState extends State<FoodPageBody> {
     );
   }
 
-  Widget _buildPageItem(index, ProductsModel popularProduct) {
+  Widget _buildPageItem(
+      index, ProductsModel popularProduct, BuildContext context) {
     Matrix4 matrix = Matrix4.identity();
     if (index == _currentPageValue.floor()) {
       var currentScale = 1 - (_currentPageValue - index) * (1 - _scaleFactor);
@@ -200,23 +189,20 @@ class _FoodPageBodyState extends State<FoodPageBody> {
       child: Stack(
         children: [
           GestureDetector(
-            onTap: () {
-              // Get.toNamed(RouteGuide.getPopularFood(index));
-            },
-            child: Container(
-              height: Dimensions.pageViewContainer,
-              margin: EdgeInsets.only(
-                  left: Dimensions.width33, right: Dimensions.width33),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(Dimensions.radius30),
-                  color: index.isOdd ? Colors.amberAccent : Colors.blueAccent,
-                  image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: NetworkImage(AppConstants.BASE_URL +
-                          AppConstants.UPLOAD_URL +
-                          popularProduct.img!))),
-            ),
-          ),
+              onTap: () {
+                // Get.toNamed(RouteGuide.getPopularFood(index));
+                context.beamToNamed('/popular/$index', data: popularProduct);
+              },
+              child: ImageLoader(
+                url: AppConstants.BASE_URL +
+                    AppConstants.UPLOAD_URL +
+                    popularProduct.img!,
+                height: Dimensions.pageViewContainer,
+                margin: EdgeInsets.only(
+                    left: Dimensions.width33, right: Dimensions.width33),
+                border: BorderRadius.circular(Dimensions.radius30),
+                fit: BoxFit.cover,
+              )),
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
