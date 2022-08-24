@@ -38,41 +38,67 @@ class _FoodPageBodyState extends State<FoodPageBody> {
               color: AppColors.mainColor,
             ));
           }
+          if (state is HomeError) {
+            return Center(
+              child: Column(
+                children: const [
+                  Icon(Icons
+                      .signal_wifi_statusbar_connected_no_internet_4_sharp),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Text("Couldn't Connect to Internet")
+                ],
+              ),
+            );
+          }
           if (state is HomeLoaded) {
             return Column(
               children: [
                 //slides
-                SizedBox(
-                    height: Dimensions.pageView,
-                    child: CarouselSlider(
-                      carouselController: _controller,
-                      options: CarouselOptions(
-                        autoPlay: true,
-                        aspectRatio: 2.0,
-                        enlargeCenterPage: true,
-                        onPageChanged: (index, reason) => setState(() {
-                          _current = index.toDouble();
-                        }),
-                      ),
-                      items: state.popularProduct.products
-                          .asMap()
-                          .map((i, product) =>
-                              MapEntry(i, _buildPageItem(i, product, context)))
-                          .values
-                          .toList(),
-                    )),
-                state.popularProduct.products.isEmpty
-                    ? Container()
-                    : DotsIndicator(
-                        dotsCount: state.popularProduct.products.length,
-                        position: _current,
-                        decorator: DotsDecorator(
-                          size: const Size.square(9.0),
-                          activeSize: const Size(18.0, 9.0),
-                          activeShape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(5.0)),
+                state.popularProduct.products.isNotEmpty
+                    ? SizedBox(
+                        child: Column(
+                          children: [
+                            SizedBox(
+                                height: Dimensions.pageView,
+                                child: CarouselSlider(
+                                  carouselController: _controller,
+                                  options: CarouselOptions(
+                                    autoPlay: true,
+                                    aspectRatio: 2.0,
+                                    autoPlayInterval:
+                                        const Duration(seconds: 9),
+                                    autoPlayAnimationDuration:
+                                        const Duration(seconds: 1),
+                                    enlargeCenterPage: true,
+                                    onPageChanged: (index, reason) =>
+                                        setState(() {
+                                      _current = index.toDouble();
+                                    }),
+                                  ),
+                                  items: state.popularProduct.products
+                                      .asMap()
+                                      .map((i, product) => MapEntry(i,
+                                          _buildPageItem(i, product, context)))
+                                      .values
+                                      .toList(),
+                                )),
+                            DotsIndicator(
+                              dotsCount: state.popularProduct.products.length,
+                              position: _current,
+                              decorator: DotsDecorator(
+                                  size: const Size.square(9.0),
+                                  activeSize: const Size(18.0, 9.0),
+                                  activeShape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(5.0)),
+                                  color: AppColors.signColor,
+                                  activeColor: AppColors.mainColor),
+                            )
+                          ],
                         ),
-                      ),
+                      )
+                    : Container(),
                 SizedBox(height: Dimensions.height20),
                 Container(
                   margin: EdgeInsets.only(
@@ -163,7 +189,7 @@ class _FoodPageBodyState extends State<FoodPageBody> {
               margin: EdgeInsets.only(
                   left: Dimensions.width33, right: Dimensions.width33),
               border: BorderRadius.circular(Dimensions.radius30),
-              fit: BoxFit.fill,
+              fit: BoxFit.cover,
             )),
         Align(
           alignment: Alignment.bottomCenter,

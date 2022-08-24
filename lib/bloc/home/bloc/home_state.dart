@@ -19,3 +19,8 @@ class HomeLoaded extends HomeState {
   @override
   List<Object> get props => [popularProduct, recommendedProduct];
 }
+
+class HomeError extends HomeState {
+  @override
+  List<Object> get props => [];
+}

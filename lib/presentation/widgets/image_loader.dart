@@ -23,41 +23,29 @@ class ImageLoader extends StatelessWidget {
       height: height,
       width: width,
       margin: margin,
-      decoration: BoxDecoration(borderRadius: border),
-      child: Image.network(
-        url,
-        height: height,
-        width: width,
-
-        // cacheHeight: height!.toInt(),
-        // cacheWidth: width!.toInt(),
-        fit: fit,
-        errorBuilder: (context, error, stackTrace) => Container(
-          decoration: const BoxDecoration(color: Colors.grey),
-        ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(15),
+        // child: Container(
+        //   height: height,
+        //   width: width,
+        //   margin: margin,
+        // decoration: BoxDecoration(borderRadius: border),
+        child: Image.network(url,
+            height: double.maxFinite,
+            width: double.infinity,
+            fit: fit,
+            errorBuilder: (context, error, stackTrace) => Image.asset(
+                  'default.jpg',
+                  height: double.infinity,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                )
+            // Container(
+            //   decoration: const BoxDecoration(color: Colors.grey),
+            ),
+        // ),
+        // ),
       ),
-    )
-
-        // Container(
-        //   height: widget.height,
-        //   width: widget.width,
-        //   margin: widget.margin,
-        //   decoration: BoxDecoration(
-        //       borderRadius: widget.border,
-        //       color: Colors.orange,
-        //       image: DecorationImage(
-        //         fit: widget.fit,
-        //         image: const AssetImage('assets/default.jpg'),
-        //         onError: (exception, stackTrace) {
-        //           // print(exception.toString());
-        //           Future.delayed(
-        //               Duration.zero,
-        //               () => setState(() {
-        //                     netImage = const AssetImage('assets/default.jpg');
-        //                   }));
-        //         },
-        //       )),
-        // )
-        ;
+    );
   }
 }

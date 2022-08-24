@@ -13,13 +13,16 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   HomeBloc(this._product) : super(HomeInitial()) {
     on<LoadApiEvent>(
       (event, emit) async {
-        print("${AppConstants.BASE_URL}${AppConstants.POPULAR_PRODUCT_URI}");
-        final popularProduct = await _product.getData(
-            "${AppConstants.BASE_URL}${AppConstants.POPULAR_PRODUCT_URI}");
-        final recommendedProduct = await _product.getData(
-            "${AppConstants.BASE_URL}${AppConstants.RECOMMENDED_PRODUCT_URI}");
+        try {
+          final popularProduct = await _product.getData(
+              "${AppConstants.BASE_URL}${AppConstants.POPULAR_PRODUCT_URI}");
+          final recommendedProduct = await _product.getData(
+              "${AppConstants.BASE_URL}${AppConstants.RECOMMENDED_PRODUCT_URI}");
 
-        emit(HomeLoaded(popularProduct, recommendedProduct));
+          emit(HomeLoaded(popularProduct, recommendedProduct));
+        } catch (e) {
+          emit(HomeError());
+        }
       },
     );
   }
