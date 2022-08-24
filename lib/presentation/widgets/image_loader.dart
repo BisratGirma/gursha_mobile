@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class ImageLoader extends StatefulWidget {
+class ImageLoader extends StatelessWidget {
   final String url;
   final double? height;
   final double? width;
@@ -18,32 +18,46 @@ class ImageLoader extends StatefulWidget {
       : super(key: key);
 
   @override
-  State<ImageLoader> createState() => _ImageLoaderState();
-}
-
-class _ImageLoaderState extends State<ImageLoader> {
-  @override
   Widget build(BuildContext context) {
-    ImageProvider netImage = NetworkImage(widget.url);
     return Container(
-      height: widget.height,
-      width: widget.width,
-      margin: widget.margin,
-      decoration: BoxDecoration(
-          borderRadius: widget.border,
-          color: Colors.orange,
-          image: DecorationImage(
-            fit: widget.fit,
-            image: netImage,
-            onError: (exception, stackTrace) {
-              // print(exception.toString());
-              Future.delayed(
-                  Duration.zero,
-                  () => setState(() {
-                        netImage = const AssetImage('assets/default.jpg');
-                      }));
-            },
-          )),
-    );
+      height: height,
+      width: width,
+      margin: margin,
+      decoration: BoxDecoration(borderRadius: border),
+      child: Image.network(
+        url,
+        height: height,
+        width: width,
+
+        // cacheHeight: height!.toInt(),
+        // cacheWidth: width!.toInt(),
+        fit: fit,
+        errorBuilder: (context, error, stackTrace) => Container(
+          decoration: const BoxDecoration(color: Colors.grey),
+        ),
+      ),
+    )
+
+        // Container(
+        //   height: widget.height,
+        //   width: widget.width,
+        //   margin: widget.margin,
+        //   decoration: BoxDecoration(
+        //       borderRadius: widget.border,
+        //       color: Colors.orange,
+        //       image: DecorationImage(
+        //         fit: widget.fit,
+        //         image: const AssetImage('assets/default.jpg'),
+        //         onError: (exception, stackTrace) {
+        //           // print(exception.toString());
+        //           Future.delayed(
+        //               Duration.zero,
+        //               () => setState(() {
+        //                     netImage = const AssetImage('assets/default.jpg');
+        //                   }));
+        //         },
+        //       )),
+        // )
+        ;
   }
 }
