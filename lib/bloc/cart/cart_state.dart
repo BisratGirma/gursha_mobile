@@ -25,7 +25,7 @@ class CartQuantityState extends CartState {
 }
 
 class CartListState extends CartState {
-  final Map<int, CartsModel> cart;
+  final List<CartsModel> cart;
   final int totalQuantity;
   const CartListState(this.cart, this.totalQuantity);
 

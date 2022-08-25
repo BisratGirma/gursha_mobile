@@ -1,3 +1,5 @@
+// ignore_for_file: use_function_type_syntax_for_parameters
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:gursha/data/models/cart_model.dart';
@@ -9,9 +11,10 @@ class CartCubit extends Cubit<CartState> {
   CartCubit() : super(const CartInitial(0));
 
   Map<int, CartsModel> _items = {};
-  int totalQuantity = 0;
-
   Map<int, CartsModel> get item => _items;
+  int totalQuantity = 0;
+  List<CartsModel> i = [];
+
   void addItem(ProductsModel product, int quantity) {
     if (quantity > 0) {
       if (_items.containsKey(product.id)) {
@@ -47,5 +50,14 @@ class CartCubit extends Cubit<CartState> {
     }
   }
 
-  void getCart() => emit(CartListState(item, totalQuantity));
+  void getCart() {
+    item.forEach((key, value) {
+      i.add(value);
+    });
+    emit(CartListState(i, totalQuantity));
+  }
+
+  void back() {
+    emit(CartQuantityState(totalQuantity));
+  }
 }

@@ -113,21 +113,21 @@ class _FoodPageBodyState extends State<FoodPageBody> {
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      HeadingText(text: 'Recommended'),
-                      SizedBox(width: Dimensions.width10),
-                      Container(
-                          margin: const EdgeInsets.only(bottom: 3),
-                          child: HeadingText(
-                            text: '.',
-                            color: Colors.black26,
-                          )),
-                      SizedBox(
-                        width: Dimensions.width10,
-                      ),
-                      Container(
-                        margin: const EdgeInsets.only(bottom: 2),
-                        child: SmallHeadingText(text: 'Food pairing'),
-                      ),
+                      HeadingText(text: 'Recommended Dishes'),
+                      // SizedBox(width: Dimensions.width10),
+                      // Container(
+                      //     margin: const EdgeInsets.only(bottom: 3),
+                      //     child: HeadingText(
+                      //       text: '.',
+                      //       color: Colors.black26,
+                      //     )),
+                      // SizedBox(
+                      //   width: Dimensions.width10,
+                      // ),
+                      // Container(
+                      //   margin: const EdgeInsets.only(bottom: 2),
+                      //   child: SmallHeadingText(text: 'Food pairing'),
+                      // ),
                     ],
                   ),
                 ),

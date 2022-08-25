@@ -54,7 +54,7 @@ class RecommendedFoodDetail extends StatelessWidget {
                                     },
                                     child: const AppIcon(icon: Icons.clear)),
                                 cartState is CartQuantityState
-                                    ? CartIcon(cartState: cartState)
+                                    ? CartIcon(quantity: cartState.quantity)
                                     : const AppIcon(
                                         icon: Icons.shopping_cart_outlined)
                               ]),

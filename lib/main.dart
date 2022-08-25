@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gursha/bloc/cart/cart_cubit.dart';
 import 'package:gursha/data/models/products_model.dart';
+import 'package:gursha/presentation/screens/cart_page.dart';
 import 'package:gursha/presentation/screens/foods/popular_food_detail.dart';
 import 'package:gursha/presentation/screens/foods/recommended_food_detail.dart';
 import 'package:gursha/presentation/screens/home/main_food_page.dart';
@@ -55,6 +56,10 @@ class MyApp extends StatelessWidget {
                     child: RecommendedFoodDetail(
                       product: product,
                     ));
+              },
+              '/cart': (p0, p1, p2) {
+                // final pageId = p1.pathParameters['id'];
+                return const BeamPage(key: ValueKey('cart'), child: CartPage());
               }
             })),
 

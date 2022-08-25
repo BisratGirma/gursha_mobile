@@ -12,6 +12,7 @@ import 'package:gursha/presentation/widgets/add_item_button.dart';
 import 'package:gursha/presentation/widgets/app_column.dart';
 import 'package:gursha/presentation/widgets/app_icon.dart';
 import 'package:gursha/presentation/widgets/cart_icon.dart';
+import 'package:gursha/presentation/widgets/counter.dart';
 import 'package:gursha/presentation/widgets/expandable_text.dart';
 import 'package:gursha/presentation/widgets/heading.dart';
 import 'package:gursha/presentation/widgets/image_loader.dart';
@@ -74,7 +75,7 @@ class PopularFoodDetail extends StatelessWidget {
                                       child: const AppIcon(
                                           icon: Icons.arrow_back_ios_new)),
                                   cartState is CartQuantityState
-                                      ? CartIcon(cartState: cartState)
+                                      ? CartIcon(quantity: cartState.quantity)
                                       : const AppIcon(
                                           icon: Icons.shopping_cart_outlined),
                                 ])),
@@ -132,32 +133,7 @@ class PopularFoodDetail extends StatelessWidget {
                         return Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Container(
-                              padding: EdgeInsets.all(Dimensions.height20),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(
-                                      Dimensions.radius30),
-                                  color: Colors.white),
-                              child: Row(children: [
-                                GestureDetector(
-                                    onTap: () {
-                                      context.read<ProductCubit>().decrement();
-                                      //popularProduct.setQuantity(false);
-                                    },
-                                    child: const Icon(Icons.remove,
-                                        color: AppColors.signColor)),
-                                const SizedBox(width: 10),
-                                HeadingText(text: '$quantity'),
-                                const SizedBox(width: 10),
-                                GestureDetector(
-                                    onTap: () {
-                                      context.read<ProductCubit>().increment();
-                                      // popularProduct.setQuantity(true);
-                                    },
-                                    child: const Icon(Icons.add,
-                                        color: AppColors.signColor))
-                              ]),
-                            ),
+                            Counter(quantity: quantity),
                             AddItemButton(
                                 quantity: quantity, product: state.product)
                           ],

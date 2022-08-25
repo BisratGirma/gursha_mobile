@@ -15,6 +15,13 @@ class AddItemButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    int sumPrice;
+    if (quantity == 0) {
+      sumPrice = product.price!;
+    } else {
+      sumPrice = product.price! * quantity;
+    }
+
     return ElevatedButton(
         style: ButtonStyle(
           padding:
@@ -30,8 +37,7 @@ class AddItemButton extends StatelessWidget {
           }
         },
         child: HeadingText(
-          text:
-              '\$${product.price! * quantity == 0 ? 1 : quantity} | Add to Cart',
+          text: '\$$sumPrice | Add to Cart',
           color: Colors.white,
         ));
   }
