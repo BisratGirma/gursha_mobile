@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gursha/presentation/util/colors.dart';
 
 class ImageLoader extends StatelessWidget {
   final String url;
@@ -34,6 +35,14 @@ class ImageLoader extends StatelessWidget {
             height: double.maxFinite,
             width: double.infinity,
             fit: fit,
+            loadingBuilder: (context, child, loadingProgress) {
+              return const Center(
+                child: CircularProgressIndicator(
+                  color: AppColors.mainColor,
+                  strokeWidth: 2,
+                ),
+              );
+            },
             errorBuilder: (context, error, stackTrace) => Image.asset(
                   'default.jpg',
                   height: double.infinity,

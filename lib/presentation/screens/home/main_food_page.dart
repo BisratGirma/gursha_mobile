@@ -5,14 +5,9 @@ import 'package:gursha/presentation/util/dimensions.dart';
 import 'package:gursha/presentation/widgets/heading.dart';
 import 'package:gursha/presentation/widgets/small_heading.dart';
 
-class MainFoodPage extends StatefulWidget {
+class MainFoodPage extends StatelessWidget {
   const MainFoodPage({Key? key}) : super(key: key);
 
-  @override
-  State<MainFoodPage> createState() => _MainFoodPageState();
-}
-
-class _MainFoodPageState extends State<MainFoodPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,7 +25,7 @@ class _MainFoodPageState extends State<MainFoodPage> {
                     children: [
                       HeadingText(
                         text: 'Ethiopia',
-                        color: Theme.of(context).primaryColorDark,
+                        color: AppColors.mainColor,
                       ),
                       Row(
                         children: [
@@ -54,7 +49,7 @@ class _MainFoodPageState extends State<MainFoodPage> {
                   )
                 ],
               )),
-          Expanded(child: SingleChildScrollView(child: FoodPageBody())),
+          const Expanded(child: SingleChildScrollView(child: FoodPageBody())),
         ],
       ),
     );

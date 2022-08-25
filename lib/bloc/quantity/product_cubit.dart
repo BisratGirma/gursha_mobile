@@ -18,4 +18,6 @@ class ProductCubit extends Cubit<int> {
       emit(state - 1);
     }
   }
+
+  void reset() => emit(0);
 }

@@ -41,13 +41,20 @@ class _FoodPageBodyState extends State<FoodPageBody> {
           if (state is HomeError) {
             return Center(
               child: Column(
-                children: const [
-                  Icon(Icons
+                children: [
+                  const Icon(Icons
                       .signal_wifi_statusbar_connected_no_internet_4_sharp),
-                  SizedBox(
-                    height: 20,
+                  const SizedBox(
+                    height: 15,
                   ),
-                  Text("Couldn't Connect to Internet")
+                  const Text("Couldn't Connect to Internet"),
+                  const SizedBox(height: 20),
+                  TextButton.icon(
+                    icon: const Icon(Icons.replay_outlined),
+                    label: const Text('Retry'),
+                    onPressed: () =>
+                        context.read<HomeBloc>()..add(LoadApiEvent()),
+                  )
                 ],
               ),
             );

@@ -1,6 +1,8 @@
 import 'package:beamer/beamer.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gursha/bloc/cart/cart_cubit.dart';
 import 'package:gursha/data/models/products_model.dart';
 import 'package:gursha/presentation/screens/foods/popular_food_detail.dart';
 import 'package:gursha/presentation/screens/foods/recommended_food_detail.dart';
@@ -20,38 +22,45 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     // Get.find<PopularProductController>().getPopularProductList();
     // Get.find<RecommendedProductController>().getRecommendedProductList();
-    return MaterialApp.router(
-      debugShowCheckedModeBanner: false,
-      scrollBehavior: AppScrollBehavior(),
-      title: 'Gursha',
-      routeInformationParser: BeamerParser(),
-      routerDelegate: BeamerDelegate(
-          initialPath: '/',
-          notFoundPage: BeamPage.notFound,
-          locationBuilder: RoutesLocationBuilder(routes: {
-            '/': (p0, p1, p2) => const Home(),
-            '/popular/:id': (p0, p1, p2) {
-              final pageId = p1.pathParameters['id'];
-              final ProductsModel product = p2 as ProductsModel;
-              return BeamPage(
-                  key: ValueKey('popular-$pageId'),
-                  child: PopularFoodDetail(
-                    product: product,
-                  ));
-            },
-            '/recommended/:id': (p0, p1, p2) {
-              final pageId = p1.pathParameters['id'];
-              final ProductsModel product = p2 as ProductsModel;
-              return BeamPage(
-                  key: ValueKey('recommended-$pageId'),
-                  child: RecommendedFoodDetail(
-                    product: product,
-                  ));
-            }
-          })),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => CartCubit(),
+        ),
+      ],
+      child: MaterialApp.router(
+        debugShowCheckedModeBanner: false,
+        scrollBehavior: AppScrollBehavior(),
+        title: 'Gursha',
+        routeInformationParser: BeamerParser(),
+        routerDelegate: BeamerDelegate(
+            initialPath: '/',
+            notFoundPage: BeamPage.notFound,
+            locationBuilder: RoutesLocationBuilder(routes: {
+              '/': (p0, p1, p2) => const Home(),
+              '/popular/:id': (p0, p1, p2) {
+                final pageId = p1.pathParameters['id'];
+                final ProductsModel product = p2 as ProductsModel;
+                return BeamPage(
+                    key: ValueKey('popular-//'),
+                    child: PopularFoodDetail(
+                      product: product,
+                    ));
+              },
+              '/recommended/:id': (p0, p1, p2) {
+                final pageId = p1.pathParameters['id'];
+                final ProductsModel product = p2 as ProductsModel;
+                return BeamPage(
+                    key: ValueKey('recommended-'),
+                    child: RecommendedFoodDetail(
+                      product: product,
+                    ));
+              }
+            })),
 
-      // initialRoute: RouteGuide.initial,
-      // getPages: RouteGuide.routes,
+        // initialRoute: RouteGuide.initial,
+        // getPages: RouteGuide.routes,
+      ),
     );
   }
 }
