@@ -51,6 +51,7 @@ class CartCubit extends Cubit<CartState> {
   }
 
   void getCart() {
+    i = [];
     item.forEach((key, value) {
       i.add(value);
     });

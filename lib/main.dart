@@ -3,10 +3,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gursha/bloc/cart/cart_cubit.dart';
-import 'package:gursha/data/models/products_model.dart';
-import 'package:gursha/presentation/screens/cart_page.dart';
-import 'package:gursha/presentation/screens/foods/popular_food_detail.dart';
-import 'package:gursha/presentation/screens/foods/recommended_food_detail.dart';
+import 'package:gursha/presentation/routes/route_guide.dart';
 import 'package:gursha/presentation/screens/home/main_food_page.dart';
 
 void main() async {
@@ -34,34 +31,7 @@ class MyApp extends StatelessWidget {
         scrollBehavior: AppScrollBehavior(),
         title: 'Gursha',
         routeInformationParser: BeamerParser(),
-        routerDelegate: BeamerDelegate(
-            initialPath: '/',
-            notFoundPage: BeamPage.notFound,
-            locationBuilder: RoutesLocationBuilder(routes: {
-              '/': (p0, p1, p2) => const Home(),
-              '/popular/:id': (p0, p1, p2) {
-                final pageId = p1.pathParameters['id'];
-                final ProductsModel product = p2 as ProductsModel;
-                return BeamPage(
-                    key: ValueKey('popular-//'),
-                    child: PopularFoodDetail(
-                      product: product,
-                    ));
-              },
-              '/recommended/:id': (p0, p1, p2) {
-                final pageId = p1.pathParameters['id'];
-                final ProductsModel product = p2 as ProductsModel;
-                return BeamPage(
-                    key: ValueKey('recommended-'),
-                    child: RecommendedFoodDetail(
-                      product: product,
-                    ));
-              },
-              '/cart': (p0, p1, p2) {
-                // final pageId = p1.pathParameters['id'];
-                return const BeamPage(key: ValueKey('cart'), child: CartPage());
-              }
-            })),
+        routerDelegate: RouteGuide.beamerDelegate,
 
         // initialRoute: RouteGuide.initial,
         // getPages: RouteGuide.routes,

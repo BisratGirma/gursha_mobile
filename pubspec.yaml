@@ -32,7 +32,7 @@ dependencies:
   dots_indicator: ^2.0.0
   cupertino_icons: ^1.0.2
   bloc: ^8.1.0
-  equatable: ^2.0.4
+  equatable: ^2.0.5
   http: ^0.13.5
   flutter_bloc: ^8.1.1
   beamer: ^1.5.2

@@ -109,8 +109,8 @@ class CartPage extends StatelessWidget {
                                     children: [
                                       HeadingText(
                                         text:
-                                            '\$${cartState.cart[index].price}',
-                                        color: Colors.red[400],
+                                            '\$${cartState.cart[index].price! * cartState.cart[index].quantity!}',
+                                        color: Colors.green[400],
                                       ),
                                       Counter(
                                         quantity:
