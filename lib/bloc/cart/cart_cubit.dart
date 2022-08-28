@@ -61,4 +61,36 @@ class CartCubit extends Cubit<CartState> {
   void back() {
     emit(CartQuantityState(totalQuantity));
   }
+
+  void incrementItem(CartsModel product, int index) {
+    _items.containsKey((key) {
+      _items.update(
+          key,
+          (value) => CartsModel(
+              id: product.id,
+              name: product.name,
+              price: product.price,
+              img: product.img,
+              quantity: product.quantity! + 1,
+              // isExit: true,
+              time: DateTime.now().toString()));
+      i[index].quantity = i[index].quantity! + 1;
+    });
+  }
+
+  void decrementItem(CartsModel product, int index) {
+    _items.containsKey((key) {
+      _items.update(
+          key,
+          (value) => CartsModel(
+              id: product.id,
+              name: product.name,
+              price: product.price,
+              img: product.img,
+              quantity: product.quantity! - 1,
+              // isExit: true,
+              time: DateTime.now().toString()));
+      i[index].quantity = i[index].quantity! - 1;
+    });
+  }
 }

@@ -110,7 +110,7 @@ class RecommendedFoodDetail extends StatelessWidget {
                       ],
                     ),
                     bottomNavigationBar: BlocProvider(
-                      create: (context) => ProductCubit(),
+                      create: (context) => ProductCubit(0),
                       child: BlocBuilder<ProductCubit, int>(
                         builder: (context, quantityState) {
                           return Column(

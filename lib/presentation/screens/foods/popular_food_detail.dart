@@ -29,7 +29,7 @@ class PopularFoodDetail extends StatelessWidget {
             create: (context) => ProductBloc(product)..add(LoadProductEvent()),
           ),
           BlocProvider(
-            create: (context) => ProductCubit(),
+            create: (context) => ProductCubit(0),
           )
         ],
         child: BlocBuilder<ProductBloc, ProductState>(

@@ -32,3 +32,12 @@ class CartListState extends CartState {
   @override
   List<Object> get props => [cart, totalQuantity];
 }
+
+class UpdateListState extends CartState {
+  final List<CartsModel> cart;
+  final int totalQuantity;
+  const UpdateListState(this.cart, this.totalQuantity);
+
+  @override
+  List<Object> get props => [cart, totalQuantity];
+}

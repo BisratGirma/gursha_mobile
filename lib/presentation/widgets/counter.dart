@@ -11,19 +11,20 @@ class Counter extends StatelessWidget {
   double? radius;
   double? gaps;
 
-  Counter(
-      {Key? key,
-      required this.quantity,
-      this.dimensions,
-      this.radius,
-      this.gaps})
-      : super(key: key);
+  Counter({
+    Key? key,
+    required this.quantity,
+    this.dimensions,
+    this.radius,
+    this.gaps,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     dimensions = dimensions ?? Dimensions.height20;
     radius = radius ?? Dimensions.radius30;
     gaps = gaps ?? 10;
+
     return Container(
         padding: EdgeInsets.all(dimensions!),
         decoration: BoxDecoration(
@@ -41,7 +42,6 @@ class Counter extends StatelessWidget {
           GestureDetector(
               onTap: () {
                 context.read<ProductCubit>().increment();
-                // popularProduct.setQuantity(true);
               },
               child: const Icon(Icons.add, color: AppColors.signColor))
         ]));

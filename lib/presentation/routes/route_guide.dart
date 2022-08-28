@@ -2,7 +2,7 @@ import 'package:beamer/beamer.dart';
 import 'package:flutter/foundation.dart';
 import 'package:gursha/data/models/products_model.dart';
 import 'package:gursha/main.dart';
-import 'package:gursha/presentation/screens/cart_page.dart';
+import 'package:gursha/presentation/screens/cart/cart_page.dart';
 import 'package:gursha/presentation/screens/foods/popular_food_detail.dart';
 import 'package:gursha/presentation/screens/foods/recommended_food_detail.dart';
 

@@ -1,7 +1,8 @@
 import 'package:bloc/bloc.dart';
 
 class ProductCubit extends Cubit<int> {
-  ProductCubit() : super(0);
+  final int quantity;
+  ProductCubit(this.quantity) : super(quantity);
 
   void increment() {
     if (state >= 20) {
@@ -19,5 +20,5 @@ class ProductCubit extends Cubit<int> {
     }
   }
 
-  void reset() => emit(0);
+  void reset({int defalult = 0}) => emit(0);
 }
