@@ -7,28 +7,30 @@ import 'package:gursha/presentation/widgets/heading.dart';
 
 class Counter extends StatelessWidget {
   final int quantity;
-  double? dimensions;
-  double? radius;
+  final double dimensions;
+  final double radius;
+  final double counterTextHeighta;
   double? gaps;
 
   Counter({
     Key? key,
     required this.quantity,
-    this.dimensions,
-    this.radius,
+    required this.dimensions,
+    required this.radius,
     this.gaps,
+    required this.counterTextHeighta,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    dimensions = dimensions ?? Dimensions.height20;
-    radius = radius ?? Dimensions.radius30;
+    // dimensions = dimensions ?? Dimensions.height20;
+    // radius = radius ?? Dimensions.radius30;
     gaps = gaps ?? 10;
 
     return Container(
-        padding: EdgeInsets.all(dimensions!),
+        padding: EdgeInsets.all(dimensions),
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(radius!), color: Colors.white),
+            borderRadius: BorderRadius.circular(radius), color: Colors.white),
         child: Row(children: [
           GestureDetector(
               onTap: () {
@@ -37,7 +39,10 @@ class Counter extends StatelessWidget {
               },
               child: const Icon(Icons.remove, color: AppColors.signColor)),
           SizedBox(width: gaps!),
-          HeadingText(text: '$quantity'),
+          HeadingText(
+            text: '$quantity',
+            size: counterTextHeighta,
+          ),
           SizedBox(width: gaps!),
           GestureDetector(
               onTap: () {

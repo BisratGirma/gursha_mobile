@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gursha/bloc/cart/cart_cubit.dart';
 import 'package:gursha/presentation/routes/route_guide.dart';
 import 'package:gursha/presentation/screens/home/main_food_page.dart';
+import 'package:gursha/presentation/util/dimensions.dart';
 
 void main() async {
   // WidgetsFlutterBinding.ensureInitialized();
@@ -18,24 +19,13 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    // Get.find<PopularProductController>().getPopularProductList();
-    // Get.find<RecommendedProductController>().getRecommendedProductList();
-    return MultiBlocProvider(
-      providers: [
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: MultiBlocProvider(providers: [
         BlocProvider(
           create: (context) => CartCubit(),
         ),
-      ],
-      child: MaterialApp.router(
-        debugShowCheckedModeBanner: false,
-        scrollBehavior: AppScrollBehavior(),
-        title: 'Gursha',
-        routeInformationParser: BeamerParser(),
-        routerDelegate: RouteGuide.beamerDelegate,
-
-        // initialRoute: RouteGuide.initial,
-        // getPages: RouteGuide.routes,
-      ),
+      ], child: const MyAppRouter()),
     );
   }
 }
@@ -48,11 +38,33 @@ class AppScrollBehavior extends MaterialScrollBehavior {
       };
 }
 
-class Home extends StatelessWidget {
-  const Home({Key? key}) : super(key: key);
+class MyAppRouter extends StatelessWidget {
+  const MyAppRouter({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return const MainFoodPage();
+    final Dimensions dimensions = Dimensions.getDimensions(
+        MediaQuery.of(context).size.height, MediaQuery.of(context).size.width);
+    return MaterialApp.router(
+      scrollBehavior: AppScrollBehavior(),
+      title: 'Gursha',
+      routeInformationParser: BeamerParser(),
+      routerDelegate: RouteGuide.beamerDelegate(dimensions),
+
+      // initialRoute: RouteGuide.initial,
+      // getPages: RouteGuide.routes,
+    );
+  }
+}
+
+class Home extends StatelessWidget {
+  final Dimensions dimensions;
+  const Home({Key? key, required this.dimensions}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MainFoodPage(
+      dimensions: dimensions,
+    );
   }
 }

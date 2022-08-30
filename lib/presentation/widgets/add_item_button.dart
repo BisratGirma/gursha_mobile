@@ -9,8 +9,15 @@ import 'package:gursha/presentation/widgets/heading.dart';
 
 class AddItemButton extends StatelessWidget {
   final int quantity;
+  final double textSize;
+  final double padding;
   final ProductsModel product;
-  const AddItemButton({Key? key, required this.quantity, required this.product})
+  const AddItemButton(
+      {Key? key,
+      required this.quantity,
+      required this.product,
+      required this.textSize,
+      required this.padding})
       : super(key: key);
 
   @override
@@ -24,8 +31,7 @@ class AddItemButton extends StatelessWidget {
 
     return ElevatedButton(
         style: ButtonStyle(
-          padding:
-              MaterialStateProperty.all(EdgeInsets.all(Dimensions.width33)),
+          padding: MaterialStateProperty.all(EdgeInsets.all(padding)),
           backgroundColor: MaterialStateProperty.all(AppColors.passColor),
         ),
         onPressed: () {
@@ -39,6 +45,7 @@ class AddItemButton extends StatelessWidget {
         child: HeadingText(
           text: '\$$sumPrice | Add to Cart',
           color: Colors.white,
+          size: textSize,
         ));
   }
 }

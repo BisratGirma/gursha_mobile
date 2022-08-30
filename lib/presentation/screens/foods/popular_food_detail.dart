@@ -19,7 +19,10 @@ import 'package:gursha/presentation/widgets/image_loader.dart';
 
 class PopularFoodDetail extends StatelessWidget {
   final ProductsModel product;
-  const PopularFoodDetail({Key? key, required this.product}) : super(key: key);
+  final Dimensions dimensions;
+  const PopularFoodDetail(
+      {Key? key, required this.product, required this.dimensions})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -54,16 +57,16 @@ class PopularFoodDetail extends StatelessWidget {
                                 AppConstants.UPLOAD_URL +
                                 state.product.img!,
                             width: double.maxFinite,
-                            height: Dimensions.popularImgSize,
+                            height: dimensions.popularImgSize,
                             fit: BoxFit.cover,
-                            border: const BorderRadius.all(Radius.zero),
+                            //border: const BorderRadius.all(Radius.zero),
                           ),
                         ),
                         Positioned(
                             top: MediaQuery.of(context).viewPadding.top +
-                                Dimensions.height15,
-                            left: Dimensions.width10,
-                            right: Dimensions.width10,
+                                dimensions.height15!,
+                            left: dimensions.width10,
+                            right: dimensions.width10,
                             child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -72,45 +75,68 @@ class PopularFoodDetail extends StatelessWidget {
                                       onTap: () {
                                         Beamer.of(context).beamToNamed('/');
                                       },
-                                      child: const AppIcon(
-                                          icon: Icons.arrow_back_ios_new)),
+                                      child: AppIcon(
+                                        icon: Icons.arrow_back_ios_new,
+                                        iconSize: dimensions.iconSize24!,
+                                      )),
                                   cartState is CartQuantityState
-                                      ? CartIcon(quantity: cartState.quantity)
-                                      : const AppIcon(
-                                          icon: Icons.shopping_cart_outlined),
+                                      ? CartIcon(
+                                          quantity: cartState.quantity,
+                                          fontSize: dimensions.font20!,
+                                          size: dimensions.height20!,
+                                          iconSize: dimensions.iconSize24!,
+                                        )
+                                      : AppIcon(
+                                          icon: Icons.shopping_cart_outlined,
+                                          iconSize: dimensions.iconSize24!),
                                 ])),
                         Positioned(
                             left: 0,
                             right: 0,
-                            top: Dimensions.popularImgSize - 21,
+                            top: dimensions.popularImgSize! -
+                                dimensions.height20!,
                             bottom: 0,
                             child: Container(
                                 padding: EdgeInsets.only(
-                                    left: Dimensions.width15,
-                                    right: Dimensions.width15,
-                                    top: Dimensions.height10),
+                                    left: dimensions.width15!,
+                                    right: dimensions.width15!,
+                                    top: dimensions.height15!),
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.only(
                                         topLeft: Radius.circular(
-                                            Dimensions.radius30),
+                                            dimensions.radius30!),
                                         topRight: Radius.circular(
-                                            Dimensions.radius30)),
+                                            dimensions.radius30!)),
                                     color: Colors.white),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     AppColumn(
-                                        title: state.product.name!,
-                                        size: Dimensions.font27),
-                                    SizedBox(height: Dimensions.height20),
-                                    HeadingText(text: 'Introduce'),
+                                      title: state.product.name!,
+                                      size: dimensions.font27!,
+                                      spacing: 5,
+                                      radius: dimensions.radius20!,
+                                      padding: dimensions.height20!,
+                                      // size: dimensions.height20!,
+                                      ratingIconSize: dimensions.iconSize16!,
+                                      iconSize: dimensions.iconSize24!,
+                                      containerHeight: dimensions.height120!,
+                                    ),
+                                    SizedBox(height: dimensions.height20),
+                                    HeadingText(
+                                      text: 'Introduce',
+                                      size: dimensions.font20!,
+                                    ),
                                     SizedBox(
-                                      height: Dimensions.height20,
+                                      height: dimensions.height10,
                                     ),
                                     Expanded(
                                         child: SingleChildScrollView(
                                       child: ExpandableText(
-                                          text: state.product.description!),
+                                        text: state.product.description!,
+                                        textHeight: 250,
+                                        size: dimensions.font20!,
+                                      ),
                                     ))
                                   ],
                                 )))
@@ -118,24 +144,33 @@ class PopularFoodDetail extends StatelessWidget {
                     },
                   ),
                   bottomNavigationBar: Container(
-                    height: Dimensions.navbarHeight,
+                    height: dimensions.navbarHeight,
                     padding: EdgeInsets.all(
-                      Dimensions.height20,
+                      dimensions.height20!,
                     ),
                     decoration: BoxDecoration(
                         color: AppColors.backgroundColors,
                         borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(Dimensions.radius20 * 2),
+                            topLeft: Radius.circular(dimensions.radius20! * 2),
                             topRight:
-                                Radius.circular(Dimensions.radius20 * 2))),
+                                Radius.circular(dimensions.radius20! * 2))),
                     child: BlocBuilder<ProductCubit, int>(
                       builder: (context, quantity) {
                         return Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Counter(quantity: quantity),
+                            Counter(
+                              quantity: quantity,
+                              counterTextHeighta: dimensions.font15!,
+                              radius: dimensions.radius20!,
+                              dimensions: dimensions.height15!,
+                            ),
                             AddItemButton(
-                                quantity: quantity, product: state.product)
+                              quantity: quantity,
+                              product: state.product,
+                              textSize: dimensions.font27!,
+                              padding: dimensions.height20!,
+                            )
                           ],
                         );
                       },

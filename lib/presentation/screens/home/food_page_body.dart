@@ -16,7 +16,8 @@ import 'package:gursha/presentation/widgets/image_loader.dart';
 import 'package:gursha/presentation/widgets/small_heading.dart';
 
 class FoodPageBody extends StatefulWidget {
-  const FoodPageBody({Key? key}) : super(key: key);
+  final Dimensions dimensions;
+  const FoodPageBody({Key? key, required this.dimensions}) : super(key: key);
 
   @override
   State<FoodPageBody> createState() => _FoodPageBodyState();
@@ -68,11 +69,11 @@ class _FoodPageBodyState extends State<FoodPageBody> {
                         child: Column(
                           children: [
                             SizedBox(
-                                height: Dimensions.pageView,
+                                height: widget.dimensions.pageView,
                                 child: CarouselSlider(
                                   carouselController: _controller,
                                   options: CarouselOptions(
-                                    autoPlay: true,
+                                    autoPlay: false,
                                     aspectRatio: 2.0,
                                     autoPlayInterval:
                                         const Duration(seconds: 9),
@@ -106,14 +107,18 @@ class _FoodPageBodyState extends State<FoodPageBody> {
                         ),
                       )
                     : Container(),
-                SizedBox(height: Dimensions.height20),
+                SizedBox(height: widget.dimensions.height20),
                 Container(
                   margin: EdgeInsets.only(
-                      left: Dimensions.width33, bottom: Dimensions.height20),
+                      left: widget.dimensions.width33!,
+                      bottom: widget.dimensions.height20!),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      HeadingText(text: 'Recommended Dishes'),
+                      HeadingText(
+                        text: 'Recommended Dishes',
+                        size: widget.dimensions.font15!,
+                      ),
                       // SizedBox(width: Dimensions.width10),
                       // Container(
                       //     margin: const EdgeInsets.only(bottom: 3),
@@ -145,25 +150,34 @@ class _FoodPageBodyState extends State<FoodPageBody> {
                               },
                               child: Container(
                                 margin: EdgeInsets.only(
-                                    left: Dimensions.width24,
-                                    right: Dimensions.width24,
-                                    bottom: Dimensions.height15),
+                                    left: widget.dimensions.width15!,
+                                    right: widget.dimensions.width15!,
+                                    bottom: widget.dimensions.height15!),
                                 child: Row(children: [
                                   ImageLoader(
                                     url: AppConstants.BASE_URL +
                                         AppConstants.UPLOAD_URL +
                                         state.recommendedProduct.products[index]
                                             .img!,
-                                    height: Dimensions.listViewImg,
-                                    width: Dimensions.listViewImg,
+                                    height: widget.dimensions.listViewImg,
+                                    width: widget.dimensions.listViewImg,
                                     fit: BoxFit.cover,
                                     border: BorderRadius.circular(
-                                        Dimensions.radius20),
+                                        widget.dimensions.radius20!),
                                   ),
                                   Expanded(
                                       child: AppColumn(
                                     title: state.recommendedProduct
                                         .products[index].name!,
+                                    spacing: widget.dimensions.height10!,
+                                    radius: widget.dimensions.radius20!,
+                                    padding: widget.dimensions.height20!,
+                                    size: widget.dimensions.height20!,
+                                    ratingIconSize:
+                                        widget.dimensions.iconSize16!,
+                                    iconSize: widget.dimensions.iconSize16!,
+                                    containerHeight:
+                                        widget.dimensions.height120!,
                                   ))
                                 ]),
                               ),
@@ -192,22 +206,24 @@ class _FoodPageBodyState extends State<FoodPageBody> {
               url: AppConstants.BASE_URL +
                   AppConstants.UPLOAD_URL +
                   popularProduct.img!,
-              height: Dimensions.pageViewContainer,
+              height: widget.dimensions.pageViewContainer,
               margin: EdgeInsets.only(
-                  left: Dimensions.width33, right: Dimensions.width33),
-              border: BorderRadius.circular(Dimensions.radius30),
+                  left: widget.dimensions.width15!,
+                  right: widget.dimensions.width15!),
+              border: BorderRadius.circular(widget.dimensions.radius30!),
               fit: BoxFit.cover,
             )),
         Align(
           alignment: Alignment.bottomCenter,
           child: Container(
-              height: Dimensions.pageViewTextContainer,
+              height: widget.dimensions.pageViewTextContainer,
               margin: EdgeInsets.only(
-                  left: Dimensions.width42,
-                  right: Dimensions.width42,
-                  bottom: Dimensions.height20),
+                  left: widget.dimensions.width42!,
+                  right: widget.dimensions.width42!,
+                  bottom: widget.dimensions.height20!),
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(Dimensions.radius20),
+                  borderRadius:
+                      BorderRadius.circular(widget.dimensions.radius20!),
                   color: Colors.white,
                   boxShadow: const [
                     BoxShadow(
@@ -219,16 +235,18 @@ class _FoodPageBodyState extends State<FoodPageBody> {
                   ]),
               child: Container(
                 padding: EdgeInsets.only(
-                    top: Dimensions.height10,
-                    left: Dimensions.width15,
-                    right: Dimensions.width15),
+                    top: widget.dimensions.height10!,
+                    left: widget.dimensions.width15!,
+                    right: widget.dimensions.width15!),
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      HeadingText(text: popularProduct.name!),
+                      HeadingText(
+                          text: popularProduct.name!,
+                          size: widget.dimensions.font20!),
                       SizedBox(
-                        height: Dimensions.height10,
+                        height: widget.dimensions.height10,
                       ),
                       Row(
                         children: [
@@ -259,13 +277,17 @@ class _FoodPageBodyState extends State<FoodPageBody> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           IconAndText(
-                              icon: Icons.circle_sharp,
-                              text: 'Normal',
-                              iconColor: AppColors.mainColor),
+                            icon: Icons.circle_sharp,
+                            text: 'Normal',
+                            iconColor: AppColors.mainColor,
+                            size: widget.dimensions.font15!,
+                          ),
                           IconAndText(
-                              icon: Icons.location_on,
-                              text: '1 Km',
-                              iconColor: AppColors.iconColor1)
+                            icon: Icons.location_on,
+                            text: '1 Km',
+                            iconColor: AppColors.iconColor1,
+                            size: widget.dimensions.font15!,
+                          )
                         ],
                       ),
                     ]),

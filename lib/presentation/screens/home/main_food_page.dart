@@ -6,7 +6,8 @@ import 'package:gursha/presentation/widgets/heading.dart';
 import 'package:gursha/presentation/widgets/small_heading.dart';
 
 class MainFoodPage extends StatelessWidget {
-  const MainFoodPage({Key? key}) : super(key: key);
+  final Dimensions dimensions;
+  const MainFoodPage({Key? key, required this.dimensions}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,9 +16,9 @@ class MainFoodPage extends StatelessWidget {
         children: [
           Container(
               margin: EdgeInsets.only(
-                  top: Dimensions.height15, bottom: Dimensions.height15),
+                  top: dimensions.height15!, bottom: dimensions.height10!),
               padding: EdgeInsets.only(
-                  left: Dimensions.width24, right: Dimensions.width24),
+                  left: dimensions.width24!, right: dimensions.width24!),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -26,6 +27,7 @@ class MainFoodPage extends StatelessWidget {
                       HeadingText(
                         text: 'Ethiopia',
                         color: AppColors.mainColor,
+                        size: dimensions.font20!,
                       ),
                       Row(
                         children: [
@@ -36,20 +38,28 @@ class MainFoodPage extends StatelessWidget {
                     ],
                   ),
                   Container(
-                    width: Dimensions.width42,
-                    height: Dimensions.width42,
+                    width: dimensions.width42,
+                    height: dimensions.width42,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15),
                     ),
                     child: Icon(
                       Icons.search_rounded,
                       color: AppColors.mainColor,
-                      size: Dimensions.iconSize24,
+                      size: dimensions.iconSize24,
                     ),
                   )
                 ],
               )),
-          const Expanded(child: SingleChildScrollView(child: FoodPageBody())),
+          Container(
+            height: MediaQuery.of(context).size.height -
+                dimensions.height100! +
+                dimensions.height10!,
+            width: MediaQuery.of(context).size.width,
+            child: Expanded(
+                child: SingleChildScrollView(
+                    child: FoodPageBody(dimensions: dimensions))),
+          ),
         ],
       ),
     );

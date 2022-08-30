@@ -7,7 +7,16 @@ import 'package:gursha/presentation/widgets/app_icon.dart';
 
 class CartIcon extends StatelessWidget {
   final int quantity;
-  const CartIcon({Key? key, required this.quantity}) : super(key: key);
+  final double size;
+  final double fontSize;
+  final double iconSize;
+  const CartIcon(
+      {Key? key,
+      required this.quantity,
+      required this.size,
+      required this.fontSize,
+      required this.iconSize})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,20 +27,19 @@ class CartIcon extends StatelessWidget {
       },
       child: Stack(
         children: [
-          const AppIcon(icon: Icons.shopping_cart_outlined),
+          AppIcon(icon: Icons.shopping_cart_outlined, iconSize: iconSize),
           Positioned(
             right: 0,
             top: 0,
             child: Container(
-                height: Dimensions.height20,
-                width: Dimensions.height20,
+                height: size,
+                width: size,
                 decoration: BoxDecoration(
                     color: Colors.red, borderRadius: BorderRadius.circular(50)),
                 child: Center(
                   child: Text(
                     '$quantity',
-                    style: TextStyle(
-                        fontSize: Dimensions.font15, color: Colors.white),
+                    style: TextStyle(fontSize: fontSize, color: Colors.white),
                   ),
                 )),
           )

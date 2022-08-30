@@ -13,10 +13,13 @@ import 'package:gursha/presentation/widgets/app_icon.dart';
 import 'package:gursha/presentation/widgets/cart_icon.dart';
 import 'package:gursha/presentation/widgets/expandable_text.dart';
 import 'package:gursha/presentation/widgets/heading.dart';
+import 'package:gursha/presentation/widgets/image_loader.dart';
 
 class RecommendedFoodDetail extends StatelessWidget {
   final ProductsModel product;
-  const RecommendedFoodDetail({Key? key, required this.product})
+  final Dimensions dimensions;
+  const RecommendedFoodDetail(
+      {Key? key, required this.product, required this.dimensions})
       : super(key: key);
 
   @override
@@ -52,11 +55,21 @@ class RecommendedFoodDetail extends StatelessWidget {
                                     onTap: () {
                                       Beamer.of(context).beamBack();
                                     },
-                                    child: const AppIcon(icon: Icons.clear)),
+                                    child: AppIcon(
+                                      icon: Icons.clear,
+                                      iconSize: dimensions.iconSize16!,
+                                    )),
                                 cartState is CartQuantityState
-                                    ? CartIcon(quantity: cartState.quantity)
-                                    : const AppIcon(
-                                        icon: Icons.shopping_cart_outlined)
+                                    ? CartIcon(
+                                        quantity: cartState.quantity,
+                                        fontSize: dimensions.font20!,
+                                        size: dimensions.height20!,
+                                        iconSize: dimensions.iconSize16!,
+                                      )
+                                    : AppIcon(
+                                        icon: Icons.shopping_cart_outlined,
+                                        iconSize: dimensions.iconSize16!,
+                                      )
                               ]),
                           bottom: PreferredSize(
                             preferredSize: const Size.fromHeight(20),
@@ -65,9 +78,9 @@ class RecommendedFoodDetail extends StatelessWidget {
                                 color: Colors.white,
                                 borderRadius: BorderRadius.only(
                                     topLeft:
-                                        Radius.circular(Dimensions.radius20),
+                                        Radius.circular(dimensions.radius20!),
                                     topRight:
-                                        Radius.circular(Dimensions.radius20)),
+                                        Radius.circular(dimensions.radius20!)),
                               ),
                               width: double.maxFinite,
                               padding:
@@ -75,34 +88,35 @@ class RecommendedFoodDetail extends StatelessWidget {
                               child: Center(
                                   child: HeadingText(
                                       text: state.product.name!,
-                                      size: Dimensions.font27)),
+                                      size: dimensions.font27!)),
                             ),
                           ),
                           pinned: true,
-                          backgroundColor: const Color.fromRGBO(255, 193, 7, 1),
+                          backgroundColor: Colors.white,
                           expandedHeight: 300,
 
                           // Background Image of the sliver
                           flexibleSpace: FlexibleSpaceBar(
-                            background: Image.network(
-                              AppConstants.BASE_URL +
-                                  AppConstants.UPLOAD_URL +
-                                  product.img!,
-                              width: double.maxFinite,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
+                              background: ImageLoader(
+                            url: AppConstants.BASE_URL +
+                                AppConstants.UPLOAD_URL +
+                                product.img!,
+                            width: double.maxFinite,
+                            fit: BoxFit.cover,
+                          )),
                         ),
                         SliverToBoxAdapter(
                           child: Column(
                             children: [
                               Container(
                                 margin: EdgeInsets.only(
-                                    left: Dimensions.width24,
-                                    right: Dimensions.width24),
+                                    left: dimensions.width24!,
+                                    right: dimensions.width24!),
                                 child: ExpandableText(
-                                    size: Dimensions.font20,
-                                    text: state.product.description!),
+                                  size: dimensions.font20!,
+                                  text: state.product.description!,
+                                  textHeight: 255,
+                                ),
                               ),
                             ],
                           ),
@@ -118,10 +132,10 @@ class RecommendedFoodDetail extends StatelessWidget {
                             children: [
                               Container(
                                 padding: EdgeInsets.only(
-                                    left: Dimensions.width24 * 2.5,
-                                    right: Dimensions.width24 * 2.5,
-                                    top: Dimensions.height10,
-                                    bottom: Dimensions.height10),
+                                    left: dimensions.width24! * 2.5,
+                                    right: dimensions.width24! * 2.5,
+                                    top: dimensions.height10!,
+                                    bottom: dimensions.height10!),
                                 child: Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
@@ -131,20 +145,22 @@ class RecommendedFoodDetail extends StatelessWidget {
                                           .read<ProductCubit>()
                                           .decrement(),
                                       child: AppIcon(
-                                          iconSize: Dimensions.iconSize24,
+                                          iconSize: dimensions.iconSize24!,
                                           iconColor: Colors.white,
                                           backgroundColor: AppColors.mainColor,
                                           icon: Icons.remove),
                                     ),
                                     HeadingText(
-                                        text:
-                                            '\$${state.product.price}  X  $quantityState'),
+                                      text:
+                                          '\$${state.product.price}  X  $quantityState',
+                                      size: dimensions.font20!,
+                                    ),
                                     GestureDetector(
                                       onTap: () => context
                                           .read<ProductCubit>()
                                           .increment(),
                                       child: AppIcon(
-                                          iconSize: Dimensions.iconSize24,
+                                          iconSize: dimensions.iconSize24!,
                                           iconColor: Colors.white,
                                           backgroundColor: AppColors.mainColor,
                                           icon: Icons.add),
@@ -153,35 +169,38 @@ class RecommendedFoodDetail extends StatelessWidget {
                                 ),
                               ),
                               Container(
-                                  height: Dimensions.navbarHeight,
+                                  height: dimensions.navbarHeight,
                                   padding: EdgeInsets.all(
-                                    Dimensions.height20,
+                                    dimensions.height20!,
                                   ),
                                   decoration: BoxDecoration(
                                       color: AppColors.backgroundColors,
                                       borderRadius: BorderRadius.only(
                                           topLeft: Radius.circular(
-                                              Dimensions.radius20 * 2),
+                                              dimensions.radius20! * 2),
                                           topRight: Radius.circular(
-                                              Dimensions.radius20 * 2))),
+                                              dimensions.radius20! * 2))),
                                   child: Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Container(
-                                        padding:
-                                            EdgeInsets.all(Dimensions.height20),
+                                        padding: EdgeInsets.all(
+                                            dimensions.height20!),
                                         decoration: BoxDecoration(
                                             borderRadius: BorderRadius.circular(
-                                                Dimensions.radius30),
+                                                dimensions.radius30!),
                                             color: Colors.white),
                                         child: const Icon(Icons.favorite,
                                             color: Colors.orange),
                                       ),
 
                                       AddItemButton(
-                                          quantity: quantityState,
-                                          product: state.product)
+                                        quantity: quantityState,
+                                        product: state.product,
+                                        textSize: dimensions.font27!,
+                                        padding: dimensions.height20!,
+                                      )
                                       // Container(
                                       //   padding:
                                       //       EdgeInsets.all(Dimensions.height20),

@@ -9,12 +9,14 @@ class IconAndText extends StatelessWidget {
   final String text;
   Color? color;
   final Color iconColor;
+  final double size;
   IconAndText(
       {Key? key,
       required this.icon,
       required this.text,
       this.color = AppColors.textColor,
-      required this.iconColor})
+      required this.iconColor,
+      required this.size})
       : super(key: key);
 
   @override
@@ -24,7 +26,7 @@ class IconAndText extends StatelessWidget {
         Icon(
           icon,
           color: iconColor,
-          size: Dimensions.iconSize24,
+          size: size,
         ),
         const SizedBox(width: 5),
         SmallHeadingText(
