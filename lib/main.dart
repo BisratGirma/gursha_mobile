@@ -8,7 +8,7 @@ import 'package:gursha/presentation/screens/home/main_food_page.dart';
 import 'package:gursha/presentation/util/dimensions.dart';
 
 void main() async {
-  // WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
   // await dependency.init();
   runApp(const MyApp());
 }
@@ -16,7 +16,7 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
+  // This widget is the root of this application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

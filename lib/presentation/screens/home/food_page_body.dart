@@ -119,20 +119,6 @@ class _FoodPageBodyState extends State<FoodPageBody> {
                         text: 'Recommended Dishes',
                         size: widget.dimensions.font15!,
                       ),
-                      // SizedBox(width: Dimensions.width10),
-                      // Container(
-                      //     margin: const EdgeInsets.only(bottom: 3),
-                      //     child: HeadingText(
-                      //       text: '.',
-                      //       color: Colors.black26,
-                      //     )),
-                      // SizedBox(
-                      //   width: Dimensions.width10,
-                      // ),
-                      // Container(
-                      //   margin: const EdgeInsets.only(bottom: 2),
-                      //   child: SmallHeadingText(text: 'Food pairing'),
-                      // ),
                     ],
                   ),
                 ),

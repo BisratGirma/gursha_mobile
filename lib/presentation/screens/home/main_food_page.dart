@@ -51,14 +51,13 @@ class MainFoodPage extends StatelessWidget {
                   )
                 ],
               )),
-          Container(
+          SizedBox(
             height: MediaQuery.of(context).size.height -
                 dimensions.height100! +
                 dimensions.height10!,
             width: MediaQuery.of(context).size.width,
-            child: Expanded(
-                child: SingleChildScrollView(
-                    child: FoodPageBody(dimensions: dimensions))),
+            child: SingleChildScrollView(
+                child: FoodPageBody(dimensions: dimensions)),
           ),
         ],
       ),
